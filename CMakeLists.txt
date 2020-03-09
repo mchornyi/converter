@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+option(BUILD_GTESTS "Build GTests" ON)
+
 configure_file(ConverterConfig.h.in ConverterConfig.h)
 
 set(CONFIG_FILE "${PROJECT_BINARY_DIR}/ConverterConfig.h")
@@ -33,4 +35,11 @@ target_link_directories(converter
     PRIVATE "$<TARGET_PROPERTY:task-runner,LIBRARY_OUTPUT_DIRECTORY>"
     )
 
-add_subdirectory(tests)
+if(${BUILD_GTESTS})
+    add_subdirectory(tests)
+endif()
+
+install(TARGETS converter 
+        RUNTIME
+        DESTINATION "${PROJECT_BINARY_DIR}/bin"
+       )
