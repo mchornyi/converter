@@ -7,6 +7,11 @@
 namespace task_runner
 {
 auto task_compare = []( const TaskBase* lhs, const TaskBase* rhs ) {
+    if ( lhs == nullptr || rhs == nullptr )
+    {
+        return false;
+    }
+
     return lhs->get_priority( ) < rhs->get_priority( );
 };
 
@@ -20,6 +25,11 @@ struct TaskList::Impl
     bool
     push( TaskBase* task )
     {
+        if ( task == nullptr )
+        {
+            return false;
+        }
+
         const std::lock_guard< std::mutex > lock( mtx );
         auto result = tasks_list.insert( task );
         return result.second;

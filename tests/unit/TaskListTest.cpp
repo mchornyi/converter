@@ -16,6 +16,17 @@ TEST( TaskListTest, EmptyPop )
     ASSERT_EQ( nullptr, task_list.pop( ) );
 }
 
+TEST( TaskListTest, PushNulptr )
+{
+    TaskList task_list;
+
+    ASSERT_EQ( 0, task_list.size( ) );
+
+    ASSERT_EQ( false, task_list.push( nullptr ) );
+
+    ASSERT_EQ( 0, task_list.size( ) );
+}
+
 TEST( TaskListTest, PushPopSize )
 {
     TaskBase task;
