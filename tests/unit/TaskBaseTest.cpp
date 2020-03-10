@@ -48,7 +48,8 @@ TEST( TaskBaseTest, GetErrorNone )
 {
     TaskBase task;
 
-    ASSERT_EQ( Error::None, task.get_error( ) );
+    ASSERT_EQ( Error::None, task.get_error( ).error );
+    ASSERT_EQ( std::string( ), task.get_error( ).msg );
 }
 
 TEST( TaskBaseTest, GetPriority )
@@ -63,6 +64,44 @@ TEST( TaskBaseTest, GetState )
     TaskBase task;
 
     ASSERT_EQ( State::None, task.get_state( ) );
+}
+
+TEST( TaskBaseTest, GetFutureTimeOutError )
+{
+    TaskBase task;
+
+    std::future< int > task_future = task.get_future( );
+
+    const std::chrono::milliseconds span( 100 );
+
+    auto result = task_future.wait_for( span );
+
+    ASSERT_NE( std::future_status::ready, result );
+}
+
+TEST( TaskBaseTest, GetFutureSuccess )
+{
+    TaskBase task;
+
+    std::future< int > task_future = task.get_future( );
+
+    const std::chrono::milliseconds span( 100 );
+
+    std::thread task_thread( [&task] {
+        const std::chrono::milliseconds span( 10 );
+        std::this_thread::sleep_for( span );
+        task.run( );
+    } );
+
+    auto result = task_future.wait_for( span );
+
+    task_thread.join();
+
+    ASSERT_EQ( std::future_status::ready, result ) << "Time out error!";
+
+    auto error_code = task_future.get( );
+
+    ASSERT_EQ( 0, error_code );
 }
 
 }  // namespace

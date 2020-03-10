@@ -15,6 +15,16 @@ enum class Error : int32_t
     None
 };
 
+struct ErrorInfo
+{
+    ErrorInfo( )
+        : error( Error::None )
+    {
+    }
+    Error error;
+    std::string msg;
+};
+
 enum class State : int32_t
 {
     None,
@@ -47,7 +57,7 @@ public:
 
     void stop( );
 
-    Error get_error( ) const;
+    ErrorInfo get_error( ) const;
 
     Priority get_priority( ) const;
 
@@ -55,10 +65,10 @@ public:
 
     State get_state( ) const;
 
-    std::future< void > get_future( );
+    std::future< int > get_future( );
 
 private:
-    virtual void run_internal( );
+    virtual ErrorInfo run_internal( );
 
     virtual void stop_internal( );
 

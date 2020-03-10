@@ -15,8 +15,7 @@ TaskID id_counter( INVALID_ID );
 struct TaskBase::Impl
 {
     Impl( )
-        : error( Error::None )
-        , state( State::None )
+        : state( State::None )
         , priority( Priority::Low )
     {
         id = ++id_counter;
@@ -36,8 +35,8 @@ struct TaskBase::Impl
 
     std::set< ITaskListener* > listeners;
     TaskID id;
-    std::promise< void > promise;
-    Error error;
+    std::promise< int > promise;
+    ErrorInfo errorInfo;
     State state;
     Priority priority;
 };
@@ -72,7 +71,9 @@ TaskBase::remove_listener( ITaskListener* listener )
 void
 TaskBase::run( )
 {
-    run_internal( );
+    m_pimpl->errorInfo = run_internal( );
+
+    m_pimpl->promise.set_value( m_pimpl->errorInfo.error == Error::None ? 0 : 1 );    
 }
 
 void
@@ -81,10 +82,10 @@ TaskBase::stop( )
     stop_internal( );
 }
 
-Error
+ErrorInfo
 TaskBase::get_error( ) const
 {
-    return m_pimpl->error;
+    return m_pimpl->errorInfo;
 }
 
 void
@@ -105,16 +106,17 @@ TaskBase::get_state( ) const
     return m_pimpl->state;
 }
 
-std::future< void >
+std::future< int >
 TaskBase::get_future( )
 {
     return m_pimpl->promise.get_future( );
 }
 
-void
+ErrorInfo
 TaskBase::run_internal( )
 {
     LOG( "WARN: Empty implementation" );
+    return ErrorInfo( );
 }
 
 void
