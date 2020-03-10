@@ -31,7 +31,11 @@ struct TaskList::Impl
         }
 
         const std::lock_guard< std::mutex > lock( mtx );
+        
         auto result = tasks_list.insert( task );
+        
+        task->set_state(State::Queued);
+
         return result.second;
     }
 
@@ -48,6 +52,9 @@ struct TaskList::Impl
         auto it = tasks_list.end( );
         --it;
         tasks_list.erase( it );
+
+        (*it)->set_state(State::None);
+
         return *it;
     }
 

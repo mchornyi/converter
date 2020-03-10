@@ -9,7 +9,7 @@ class ITaskListener
 protected:
     virtual ~ITaskListener( ) = default;
 
-private:
+public:
     virtual void on_completed( TaskBase* ) = 0;
 };
 }  // namespace task_runner

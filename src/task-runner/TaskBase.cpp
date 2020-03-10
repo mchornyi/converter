@@ -1,5 +1,6 @@
-#include "common/Log.h"
 #include "task-runner/TaskBase.h"
+#include "task-runner/ITaskListener.h"
+#include "common/Log.h"
 
 #include <set>
 
@@ -71,9 +72,13 @@ TaskBase::remove_listener( ITaskListener* listener )
 void
 TaskBase::run( )
 {
+    set_state( State::Running );
+
     m_pimpl->errorInfo = run_internal( );
 
-    m_pimpl->promise.set_value( m_pimpl->errorInfo.error == Error::None ? 0 : 1 );    
+    set_state( State::Completed );
+
+    m_pimpl->promise.set_value( m_pimpl->errorInfo.error == Error::None ? 0 : 1 );
 }
 
 void
@@ -104,6 +109,25 @@ State
 TaskBase::get_state( ) const
 {
     return m_pimpl->state;
+}
+
+void
+TaskBase::set_state( State value )
+{
+    if ( m_pimpl->state == value )
+    {
+        return;
+    }
+
+    m_pimpl->state = value;
+
+    if ( m_pimpl->state == State::Completed )
+    {
+        for ( auto* listener : m_pimpl->listeners )
+        {
+            listener->on_completed( this );
+        }
+    }
 }
 
 std::future< int >

@@ -64,6 +64,8 @@ public:
     void set_priority( Priority );
 
     State get_state( ) const;
+    
+    void set_state(State);
 
     std::future< int > get_future( );
 

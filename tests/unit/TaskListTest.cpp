@@ -64,4 +64,25 @@ TEST( TaskListTest, PriorityCheck )
     ASSERT_EQ( &task_low, task_list.pop( ) );
 }
 
+TEST( TaskListTest, StateCheckAftertPushPop )
+{
+    TaskBase task;
+
+    TaskList task_list;
+
+    ASSERT_TRUE( task_list.push( &task ) );
+
+    ASSERT_EQ( 1, task_list.size( ) );
+
+    ASSERT_EQ( State::Queued, task.get_state( ) );
+
+    TaskBase* task_tmp = task_list.pop( );
+
+    ASSERT_EQ( 0, task_list.size( ) );
+
+    ASSERT_EQ( &task, task_tmp );
+
+    ASSERT_EQ( State::None, task_tmp->get_state( ) );
+}
+
 }  // namespace
