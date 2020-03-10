@@ -29,12 +29,15 @@ format_message( const char* file, const char* function, int line, const char* me
 
     auto thread_id = std::this_thread::get_id( );
 
+    std::string str_file( file );
+    const std::string project_src("converter/");
+    str_file = str_file.substr( str_file.find( project_src ) );
+
     std::stringstream ss;
 
     ss << "[" << std::put_time( &log_time_local, "%F %T" ) << "]"
        << "[tid:" << thread_id << "]"
-       << "[func:" << function << "]"
-       << "[" << file << ":" << line << " " << message << "\n";
+       << "[..." << str_file << ":" << line << "(" << function << ")] " << message << "\n";
 
     return ss.str( );
 }

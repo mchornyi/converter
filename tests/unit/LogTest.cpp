@@ -8,7 +8,7 @@ TEST( LogTest, LogMessageValidation )
 {
     std::string expected_message( "ConverterMessageTestMessage" );
     std::string expected_line_number( ":13" );
-    std::string expected_function( "func:TestBody" );
+    std::string expected_function( "TestBody" );
 
     std::string actual = FORMAT_LOG( "ConverterMessageTestMessage" );
 
