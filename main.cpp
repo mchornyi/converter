@@ -7,15 +7,17 @@
 
 #include "TaskBase.h"
 
-int main( int argc, const char* argv[] )
+int
+main( int argc, const char* argv[] )
 {
-    if (argc < 2) 
+    if ( argc < 2 )
     {
-        std::cout << "Converter"<< std::endl \
-            << "Version " << Converter_VERSION_MAJOR << "." << Converter_VERSION_MINOR << std::endl;
+        std::cout << "Converter" << std::endl
+                  << "Version " << Converter_VERSION_MAJOR << "." << Converter_VERSION_MINOR
+                  << std::endl;
     }
 
     task_runner::TaskBase obj;
-  
+
     return 1;
 }

@@ -41,5 +41,4 @@ endif()
 
 install(TARGETS converter 
         RUNTIME
-        DESTINATION "${PROJECT_BINARY_DIR}/bin"
        )
