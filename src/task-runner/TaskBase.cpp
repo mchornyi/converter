@@ -42,7 +42,7 @@ struct TaskBase::Impl
 };
 
 TaskBase::TaskBase( )
-    : m_pimpl( new TaskBase::Impl( ) )
+    : m_pimpl( new Impl( ) )
 {
 }
 

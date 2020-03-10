@@ -18,7 +18,7 @@ set(CONFIG_FILE "${PROJECT_BINARY_DIR}/ConverterConfig.h")
 
 set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/")
 
-#add_subdirectory("src/task-runner")
+add_compile_options(-Wall)
 
 file(GLOB_RECURSE SRC "src/*.cpp")
 

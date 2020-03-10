@@ -59,6 +59,14 @@ TEST( TaskBaseTest, GetPriority )
     ASSERT_EQ( Priority::Low, task.get_priority( ) );
 }
 
+TEST( TaskBaseTest, SetPriority )
+{
+    TaskBase task;
+    task.set_priority(Priority::Medium);
+
+    ASSERT_EQ( Priority::Medium, task.get_priority( ) );
+}
+
 TEST( TaskBaseTest, GetState )
 {
     TaskBase task;

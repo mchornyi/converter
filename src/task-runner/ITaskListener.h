@@ -6,6 +6,9 @@ class TaskBase;
 
 class ITaskListener
 {
+protected:
+    virtual ~ITaskListener( ) = default;
+
 private:
     virtual void on_completed( TaskBase* ) = 0;
 };

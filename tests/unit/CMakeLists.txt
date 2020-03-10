@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(unit)
 
-file(GLOB UNIT_SRC "*.cpp")
+file(GLOB_RECURSE UNIT_SRC "*.cpp")
 
 add_executable(unit "${UNIT_SRC}")
 
