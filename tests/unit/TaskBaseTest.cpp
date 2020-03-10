@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "TaskBase.h"
+#include "task-runner/TaskBase.h"
 
 namespace
 {

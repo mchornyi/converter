@@ -6,12 +6,12 @@ file(GLOB UNIT_SRC "*.cpp")
 
 add_executable(unit "${UNIT_SRC}")
 
-target_link_libraries(unit gtest_main task-runner)
+target_link_libraries(unit gtest_main converter_arch)
 
 target_include_directories(unit
-    PRIVATE "$<TARGET_PROPERTY:task-runner,INCLUDE_DIRECTORIES>"
+    PRIVATE "$<TARGET_PROPERTY:converter_arch,INCLUDE_DIRECTORIES>"
     )
 
 target_link_directories(converter
-    PRIVATE "$<TARGET_PROPERTY:task-runner,LIBRARY_OUTPUT_DIRECTORY>"
+    PRIVATE "$<TARGET_PROPERTY:converter_arch,LIBRARY_OUTPUT_DIRECTORY>"
     )

@@ -5,7 +5,7 @@
 #define Converter_VERSION_MINOR 0
 #endif
 
-#include "TaskBase.h"
+#include "task-runner/TaskBase.h"
 
 int
 main( int argc, const char* argv[] )

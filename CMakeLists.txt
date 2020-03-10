@@ -16,23 +16,27 @@ configure_file(ConverterConfig.h.in ConverterConfig.h)
 
 set(CONFIG_FILE "${PROJECT_BINARY_DIR}/ConverterConfig.h")
 
-set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/common")
+set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/")
 
-add_subdirectory("src/task-runner")
+#add_subdirectory("src/task-runner")
+
+file(GLOB_RECURSE SRC "src/*.cpp")
+
+add_library(converter_arch "${SRC}")
+
+target_include_directories(converter_arch
+    PUBLIC "src"
+    PUBLIC "inc"
+    )
 
 add_executable(converter main.cpp)
 
 target_compile_definitions(converter PRIVATE -DCONFIG_FILE="${CONFIG_FILE}")
 
-target_link_libraries(converter task-runner)
+target_link_libraries(converter converter_arch)
 
 target_include_directories(converter
     PRIVATE "${PROJECT_BINARY_DIR}"
-    PRIVATE "$<TARGET_PROPERTY:task-runner,INCLUDE_DIRECTORIES>"
-    )
-
-target_link_directories(converter
-    PRIVATE "$<TARGET_PROPERTY:task-runner,LIBRARY_OUTPUT_DIRECTORY>"
     )
 
 if(${BUILD_GTESTS})
@@ -41,4 +45,5 @@ endif()
 
 install(TARGETS converter 
         RUNTIME
+        DESTINATION bin
        )
