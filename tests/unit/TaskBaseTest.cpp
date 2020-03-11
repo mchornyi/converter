@@ -141,6 +141,9 @@ TEST( TaskBaseTest, AddRemoveListener )
 
     ASSERT_EQ( true, task.remove_listener( &fake_listener ) );
     ASSERT_NE( true, task.remove_listener( &fake_listener ) );
+
+    ASSERT_EQ( false, task.add_listener( nullptr ) );
+    ASSERT_EQ( false, task.remove_listener( nullptr ) );
 }
 
 }  // namespace

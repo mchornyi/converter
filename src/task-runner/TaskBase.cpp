@@ -25,6 +25,11 @@ struct TaskBase::Impl
     bool
     add_listener( ITaskListener* listener )
     {
+        if ( listener == nullptr )
+        {
+            return false;
+        }
+
         auto res = listeners.insert( listener );
         return res.second;
     }
