@@ -62,7 +62,7 @@ TEST( TaskBaseTest, GetPriority )
 TEST( TaskBaseTest, SetPriority )
 {
     TaskBase task;
-    task.set_priority(Priority::Medium);
+    task.set_priority( Priority::Medium );
 
     ASSERT_EQ( Priority::Medium, task.get_priority( ) );
 }
@@ -72,6 +72,17 @@ TEST( TaskBaseTest, GetState )
     TaskBase task;
 
     ASSERT_EQ( State::None, task.get_state( ) );
+}
+
+TEST( TaskBaseTest, GetStateAfterRunCommand )
+{
+    TaskBase task;
+
+    ASSERT_EQ( State::None, task.get_state( ) );
+
+    task.run();
+
+    ASSERT_EQ( State::Completed, task.get_state( ) );
 }
 
 TEST( TaskBaseTest, GetFutureTimeOutError )
@@ -103,13 +114,33 @@ TEST( TaskBaseTest, GetFutureSuccess )
 
     auto result = task_future.wait_for( span );
 
-    task_thread.join();
+    task_thread.join( );
 
     ASSERT_EQ( std::future_status::ready, result ) << "Time out error!";
 
     auto error_code = task_future.get( );
 
     ASSERT_EQ( 0, error_code );
+}
+
+TEST( TaskBaseTest, AddRemoveListener )
+{
+    TaskBase task;
+
+    class FakeListener : public ITaskListener
+    {
+        virtual void
+        on_completed( TaskBase* ) override
+        {
+        }
+
+    } fake_listener;
+
+    ASSERT_EQ( true, task.add_listener( &fake_listener ) );
+    ASSERT_NE( true, task.add_listener( &fake_listener ) );
+
+    ASSERT_EQ( true, task.remove_listener( &fake_listener ) );
+    ASSERT_NE( true, task.remove_listener( &fake_listener ) );
 }
 
 }  // namespace
