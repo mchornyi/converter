@@ -6,6 +6,13 @@
 namespace
 {
 using namespace task_runner;
+
+class MockTaskListener : public ITaskListener
+{
+public:
+    MOCK_METHOD( void, on_completed, (TaskBase*), ( override ) );
+};
+
 // Tests the default constructor.
 TEST( TaskBaseTest, GetID )
 {
@@ -80,7 +87,7 @@ TEST( TaskBaseTest, GetStateAfterRunCommand )
 
     ASSERT_EQ( State::None, task.get_state( ) );
 
-    task.run();
+    task.run( );
 
     ASSERT_EQ( State::Completed, task.get_state( ) );
 }
@@ -144,6 +151,19 @@ TEST( TaskBaseTest, AddRemoveListener )
 
     ASSERT_EQ( false, task.add_listener( nullptr ) );
     ASSERT_EQ( false, task.remove_listener( nullptr ) );
+}
+
+TEST( TaskBaseTest, ListenerCallExpectation )
+{
+    TaskBase task;
+
+    MockTaskListener mock_task_listener;
+
+    EXPECT_CALL(mock_task_listener, on_completed);
+
+    ASSERT_TRUE( task.add_listener( &mock_task_listener ) );
+
+    task.run();
 }
 
 }  // namespace
