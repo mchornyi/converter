@@ -38,7 +38,7 @@ TaskThread::TaskThread( TaskList* task_list )
 
 TaskThread::~TaskThread( )
 {
-    if ( m_pimpl->task_thread.joinable( ) )
+    if ( is_running( ) )
     {
         fprintf( stderr, "%s", get_death_error_msg( ) );
     }
@@ -49,7 +49,7 @@ TaskThread::poll( )
 {
     const auto sleep_time = std::chrono::milliseconds( 200 );
 
-    LOG( "INFO: The thread is enabled");
+    LOG( "INFO: The thread is enabled" );
 
     while ( m_pimpl->is_enabled.load( std::memory_order::memory_order_relaxed ) )
     {
@@ -81,7 +81,8 @@ TaskThread::join( )
 bool
 TaskThread::is_running( ) const
 {
-    return m_pimpl->is_enabled.load( std::memory_order::memory_order_relaxed );
+    return m_pimpl->is_enabled.load( std::memory_order::memory_order_relaxed )
+           && m_pimpl->task_thread.joinable( );
 }
 
 }  // namespace task_runner

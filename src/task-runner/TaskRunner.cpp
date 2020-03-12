@@ -1,3 +1,4 @@
+#include "common/Log.h"
 #include "task-runner/TaskList.h"
 #include "task-runner/TaskRunner.h"
 #include "task-runner/TaskThread.h"
@@ -26,6 +27,10 @@ TaskRunner::TaskRunner( u_int8_t thread_count /*= 1*/ )
 
 TaskRunner::~TaskRunner( )
 {
+    if ( is_running( ) )
+    {
+        LOG( "ERROR: The TaskRunner is still runnig!" );
+    }
 }
 
 void
