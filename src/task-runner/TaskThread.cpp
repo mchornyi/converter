@@ -49,6 +49,8 @@ TaskThread::poll( )
 {
     const auto sleep_time = std::chrono::milliseconds( 200 );
 
+    LOG( "INFO: The thread is enabled");
+
     while ( m_pimpl->is_enabled.load( std::memory_order::memory_order_relaxed ) )
     {
         auto task = m_pimpl->task_list->pop( );

@@ -45,7 +45,7 @@ TEST( TaskThreadDeathTest, NoJoin )
         TaskThread::get_death_error_msg( ) );
 }
 
-TEST( TaskThreadDeathTest, Stop )
+TEST( TaskThreadTest, Stop )
 {
     TaskList task_list;
 
@@ -59,7 +59,7 @@ TEST( TaskThreadDeathTest, Stop )
     stop_thread( task_thread );
 }
 
-TEST( TaskThreadDeathTest, RunTask )
+TEST( TaskThreadTest, RunTask )
 {
     TaskBase task_base;
 

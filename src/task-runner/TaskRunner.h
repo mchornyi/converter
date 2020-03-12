@@ -7,12 +7,18 @@ namespace task_runner
 class TaskRunner final
 {
 public:
-    TaskRunner( );
+    explicit TaskRunner( u_int8_t thread_count = 1 );
     ~TaskRunner( );
 
     TaskRunner( TaskRunner& ) = delete;
 
     TaskRunner& operator=( TaskRunner& ) = delete;
+
+    void join();
+
+    void stop();
+
+    bool is_running() const;
 
 private:
     struct Impl;
