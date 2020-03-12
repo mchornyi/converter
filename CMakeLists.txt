@@ -20,6 +20,8 @@ set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/")
 
 add_compile_options(-Wall)
 
+add_subdirectory("external/lame")
+
 file(GLOB_RECURSE SRC "src/*.cpp")
 
 add_library(converter_arch "${SRC}")
