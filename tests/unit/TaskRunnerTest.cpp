@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "MockTaskBaseListener.h"
+#include "Helpers.h"
 #include "task-runner/TaskBase.h"
 #include "task-runner/TaskRunner.h"
 #include "task-runner/TaskThread.h"
@@ -11,28 +12,6 @@
 namespace
 {
 using namespace task_runner;
-
-void
-stop_task_runner( TaskRunner& task_runner )
-{
-    using namespace std::chrono;
-
-    ASSERT_TRUE( task_runner.is_running( ) );
-
-    task_runner.stop( );
-
-    int max_iteration_count = 100;
-    while ( max_iteration_count-- > 0 && task_runner.is_running( ) )
-    {
-        std::this_thread::sleep_for( milliseconds( 10 ) );
-    }
-
-    // This helps to avoid the blocked state
-    ASSERT_FALSE( task_runner.is_running( ) )
-        << "ERROR: The TaskRunner cannot stop! The crash is going to happen!";
-
-    task_runner.join( );
-}
 
 TEST( TaskRunnerDeathTest, NoJoin )
 {
@@ -49,7 +28,7 @@ TEST( TaskRunnerTest, Stop )
     const std::chrono::milliseconds span( 100 );
     std::this_thread::sleep_for( span );
 
-    stop_task_runner( task_runner );
+    helpers::stop_task_runner( task_runner );
 }
 
 TEST( TaskRunnerTest, AddTask )
@@ -61,7 +40,7 @@ TEST( TaskRunnerTest, AddTask )
     ASSERT_TRUE( task_runner.add_task( &task ) );
     ASSERT_FALSE( task_runner.add_task( nullptr ) );
 
-    stop_task_runner( task_runner );
+    helpers::stop_task_runner( task_runner );
 }
 
 TEST( TaskRunnerTest, CheckTaskState )
@@ -91,7 +70,7 @@ TEST( TaskRunnerTest, CheckTaskState )
 
     ASSERT_EQ( 0, error_code );
 
-    stop_task_runner( task_runner );
+    helpers::stop_task_runner( task_runner );
 }
 
 }  // namespace
