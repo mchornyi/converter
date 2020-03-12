@@ -12,7 +12,8 @@ using TaskID = uint32_t;
 
 enum class Error : int32_t
 {
-    None
+    None,
+    InvalidArgument
 };
 
 struct ErrorInfo
@@ -21,6 +22,14 @@ struct ErrorInfo
         : error( Error::None )
     {
     }
+
+    ErrorInfo( Error _error, std::string _msg )
+        : error( _error )
+        , msg( std::move( _msg ) )
+
+    {
+    }
+
     Error error;
     std::string msg;
 };
@@ -70,7 +79,7 @@ public:
     std::future< int > get_future( );
 
 private:
-    void set_state(State);
+    void set_state( State );
 
     virtual ErrorInfo run_internal( );
 
