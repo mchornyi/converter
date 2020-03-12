@@ -88,7 +88,7 @@ TEST( TaskBaseTest, GetStateAfterRunCommand )
 
     ASSERT_EQ( State::None, task.get_state( ) );
 
-    task.run( );
+    ASSERT_TRUE( task.run( ) );
 
     ASSERT_EQ( State::Completed, task.get_state( ) );
 }
@@ -154,17 +154,31 @@ TEST( TaskBaseTest, AddRemoveListener )
     ASSERT_EQ( false, task.remove_listener( nullptr ) );
 }
 
-TEST( TaskBaseTest, ListenerCallExpectation )
+TEST( TaskBaseTest, OnCompleted )
 {
     TaskBase task;
 
     MockTaskListener mock_task_listener;
 
-    EXPECT_CALL(mock_task_listener, on_completed);
+    EXPECT_CALL( mock_task_listener, on_completed );
 
     ASSERT_TRUE( task.add_listener( &mock_task_listener ) );
 
-    task.run();
+    ASSERT_TRUE( task.run( ) );
+}
+
+TEST( TaskBaseTest, OnCompletedAndNoOnCompleted )
+{
+    TaskBase task;
+
+    MockTaskListener mock_task_listener;
+
+    EXPECT_CALL( mock_task_listener, on_completed );
+
+    ASSERT_TRUE( task.add_listener( &mock_task_listener ) );
+
+    ASSERT_TRUE( task.run( ) );
+    ASSERT_FALSE( task.run( ) );
 }
 
 }  // namespace

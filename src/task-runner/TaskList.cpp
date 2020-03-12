@@ -30,6 +30,11 @@ struct TaskList::Impl
             return false;
         }
 
+        if ( task->get_state() != State::None )
+        {
+            return false;
+        }
+
         const std::lock_guard< std::mutex > lock( mtx );
         
         auto result = tasks_list.insert( task );

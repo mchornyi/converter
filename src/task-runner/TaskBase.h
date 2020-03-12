@@ -42,6 +42,8 @@ enum class Priority : int32_t
 
 class TaskBase
 {
+    friend class TaskList;
+
 public:
     TaskBase( );
     TaskBase( const TaskBase& ) = delete;
@@ -53,7 +55,7 @@ public:
 
     TaskID get_id( ) const;
 
-    void run( );
+    bool run( );
 
     void stop( );
 
@@ -64,12 +66,12 @@ public:
     void set_priority( Priority );
 
     State get_state( ) const;
-    
-    void set_state(State);
 
     std::future< int > get_future( );
 
 private:
+    void set_state(State);
+
     virtual ErrorInfo run_internal( );
 
     virtual void stop_internal( );

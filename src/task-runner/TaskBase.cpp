@@ -1,6 +1,6 @@
-#include "task-runner/TaskBase.h"
-#include "task-runner/ITaskListener.h"
 #include "common/Log.h"
+#include "task-runner/ITaskListener.h"
+#include "task-runner/TaskBase.h"
 
 #include <set>
 
@@ -45,6 +45,7 @@ struct TaskBase::Impl
     ErrorInfo errorInfo;
     State state;
     Priority priority;
+    std::mutex run_mtx;
 };
 
 TaskBase::TaskBase( )
@@ -74,9 +75,18 @@ TaskBase::remove_listener( ITaskListener* listener )
     return m_pimpl->remove_listener( listener );
 }
 
-void
+bool
 TaskBase::run( )
 {
+    std::lock_guard<std::mutex> lock(m_pimpl->run_mtx);
+
+    const State currnet_state = get_state( );
+    if ( currnet_state != State::None )
+    {
+        LOG( "WARN: The task id=%l state is ", get_id( ), currnet_state );
+        return false;
+    }
+
     set_state( State::Running );
 
     m_pimpl->errorInfo = run_internal( );
@@ -84,6 +94,8 @@ TaskBase::run( )
     set_state( State::Completed );
 
     m_pimpl->promise.set_value( m_pimpl->errorInfo.error == Error::None ? 0 : 1 );
+
+    return true;
 }
 
 void

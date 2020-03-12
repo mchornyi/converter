@@ -85,4 +85,22 @@ TEST( TaskListTest, StateCheckAftertPushPop )
     ASSERT_EQ( State::None, task_tmp->get_state( ) );
 }
 
+TEST( TaskListTest, StateCheckInSecondTaskList )
+{
+    TaskBase task;
+
+    TaskList task_list;
+    TaskList task_list_second;
+
+    ASSERT_TRUE( task_list.push( &task ) );
+
+    ASSERT_EQ( 1, task_list.size( ) );
+
+    ASSERT_EQ( State::Queued, task.get_state( ) );
+
+    ASSERT_FALSE( task_list_second.push( &task ) );
+
+    ASSERT_EQ( 0, task_list_second.size( ) );
+}
+
 }  // namespace
