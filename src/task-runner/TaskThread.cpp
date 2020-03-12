@@ -47,7 +47,7 @@ TaskThread::~TaskThread( )
 void
 TaskThread::poll( )
 {
-    const auto sleep_time = std::chrono::milliseconds( 200 );
+    const std::chrono::milliseconds span( 200 );
 
     LOG( "INFO: The thread is enabled" );
 
@@ -60,7 +60,7 @@ TaskThread::poll( )
             task->run( );
         }
 
-        std::this_thread::sleep_for( sleep_time );
+        std::this_thread::sleep_for( span );
 
         std::this_thread::yield( );
     }

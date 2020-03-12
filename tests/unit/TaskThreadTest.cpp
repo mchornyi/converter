@@ -54,7 +54,8 @@ TEST( TaskThreadTest, Stop )
     ASSERT_TRUE( task_thread.is_running( ) );
 
     // wait for thread to start
-    std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
+    const std::chrono::milliseconds span( 100 );
+    std::this_thread::sleep_for( span );
 
     stop_thread( task_thread );
 }
@@ -72,11 +73,13 @@ TEST( TaskThreadTest, RunTask )
     ASSERT_TRUE( task_thread.is_running( ) );
 
     // wait for thread to start
-    std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
+    const std::chrono::milliseconds span( 100 );
+    std::this_thread::sleep_for( span );
 
     task_list.push( &task_base );
 
-    task_future.wait_for( std::chrono::milliseconds( 300 ) );
+    const std::chrono::milliseconds span_future( 300 );
+    task_future.wait_for( span_future );
 
     EXPECT_EQ( State::Completed, task_base.get_state( ) ) << "ERROR: The task is not completed!";
 

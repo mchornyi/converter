@@ -64,4 +64,11 @@ TaskRunner::is_running( ) const
 
     return false;
 }
+
+bool
+TaskRunner::add_task( TaskBase* task )
+{
+    return m_pimpl->task_list.push( task );
+}
+
 }  // namespace task_runner

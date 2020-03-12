@@ -1,17 +1,11 @@
 #include "gmock/gmock.h"
 
-#include "task-runner/ITaskListener.h"
 #include "task-runner/TaskBase.h"
+#include "MockTaskBaseListener.h"
 
 namespace
 {
 using namespace task_runner;
-
-class MockTaskListener : public ITaskListener
-{
-public:
-    MOCK_METHOD( void, on_completed, (TaskBase*), ( override ) );
-};
 
 // Tests the default constructor.
 // The test is disabled because the order of TaskBase creating is not defined
@@ -97,7 +91,7 @@ TEST( TaskBaseTest, GetFutureTimeOutError )
 {
     TaskBase task;
 
-    std::future< int > task_future = task.get_future( );
+    auto task_future = task.get_future( );
 
     const std::chrono::milliseconds span( 100 );
 
@@ -110,7 +104,7 @@ TEST( TaskBaseTest, GetFutureSuccess )
 {
     TaskBase task;
 
-    std::future< int > task_future = task.get_future( );
+    auto task_future = task.get_future( );
 
     const std::chrono::milliseconds span( 100 );
 
@@ -158,7 +152,7 @@ TEST( TaskBaseTest, OnCompleted )
 {
     TaskBase task;
 
-    MockTaskListener mock_task_listener;
+    task_mocks::MockTaskListener mock_task_listener;
 
     EXPECT_CALL( mock_task_listener, on_completed );
 
@@ -171,7 +165,7 @@ TEST( TaskBaseTest, OnCompletedAndNoOnCompleted )
 {
     TaskBase task;
 
-    MockTaskListener mock_task_listener;
+    task_mocks::MockTaskListener mock_task_listener;
 
     EXPECT_CALL( mock_task_listener, on_completed );
 

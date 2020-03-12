@@ -4,6 +4,8 @@
 
 namespace task_runner
 {
+    class TaskBase;
+
 class TaskRunner final
 {
 public:
@@ -19,6 +21,8 @@ public:
     void stop();
 
     bool is_running() const;
+
+    bool add_task(TaskBase*);
 
 private:
     struct Impl;
