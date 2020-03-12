@@ -6,11 +6,11 @@ namespace task_runner
 {
 class TaskBase;
 
-class TaskList
+class TaskList final
 {
 public:
     TaskList( );
-    virtual ~TaskList( );
+    ~TaskList( );
 
     TaskList( const TaskList& ) = delete;
     TaskList& operator=( const TaskList& ) = delete;
