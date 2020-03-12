@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "common/Log.h"
+#include "task-runner/TaskBase.h"
 #include "task-runner/TaskList.h"
 #include "task-runner/TaskThread.h"
 
@@ -10,6 +11,28 @@
 namespace
 {
 using namespace task_runner;
+
+void
+stop_thread( TaskThread& thread )
+{
+    using namespace std::chrono;
+
+    ASSERT_TRUE( thread.is_running( ) );
+
+    thread.stop( );
+
+    int max_iteration_count = 100;
+    while ( max_iteration_count-- > 0 && thread.is_running( ) )
+    {
+        std::this_thread::sleep_for( milliseconds( 10 ) );
+    }
+
+    // This helps to avoid the blocked state
+    ASSERT_FALSE( thread.is_running( ) )
+        << "ERROR: The thread cannot stop! The crash is going to happen!";
+
+    thread.join( );
+}
 
 TEST( TaskThreadDeathTest, NoJoin )
 {
@@ -24,7 +47,23 @@ TEST( TaskThreadDeathTest, NoJoin )
 
 TEST( TaskThreadDeathTest, Stop )
 {
-    using namespace std::chrono;
+    TaskList task_list;
+
+    TaskThread task_thread( &task_list );
+
+    ASSERT_TRUE( task_thread.is_running( ) );
+
+    // wait for thread to start
+    std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
+
+    stop_thread( task_thread );
+}
+
+TEST( TaskThreadDeathTest, RunTask )
+{
+    TaskBase task_base;
+
+    auto task_future = task_base.get_future( );
 
     TaskList task_list;
 
@@ -33,21 +72,15 @@ TEST( TaskThreadDeathTest, Stop )
     ASSERT_TRUE( task_thread.is_running( ) );
 
     // wait for thread to start
-    std::this_thread::sleep_for( milliseconds( 100 ) );
+    std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
 
-    task_thread.stop( );
+    task_list.push( &task_base );
 
-    int max_iteration_count = 100;
-    while ( max_iteration_count-- > 0 && task_thread.is_running( ) )
-    {
-        std::this_thread::sleep_for( milliseconds( 10 ) );
-    }
+    task_future.wait_for( std::chrono::milliseconds( 300 ) );
 
-    // This helps to avoid the blocked state
-    ASSERT_FALSE( task_thread.is_running( ) )
-        << "ERROR: The thread cannot stop! The crash is going to happen!";
+    EXPECT_EQ( State::Completed, task_base.get_state( ) ) << "ERROR: The task is not completed!";
 
-    task_thread.join( );
+    stop_thread( task_thread );
 }
 
 }  // namespace

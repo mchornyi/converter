@@ -1,4 +1,6 @@
 #include "common/Log.h"
+#include "task-runner/TaskBase.h"
+#include "task-runner/TaskList.h"
 #include "task-runner/TaskThread.h"
 
 #include <atomic>
@@ -45,10 +47,17 @@ TaskThread::~TaskThread( )
 void
 TaskThread::poll( )
 {
-    const auto sleep_time = std::chrono::milliseconds( 1000 );
+    const auto sleep_time = std::chrono::milliseconds( 200 );
 
     while ( m_pimpl->is_enabled.load( std::memory_order::memory_order_relaxed ) )
     {
+        auto task = m_pimpl->task_list->pop( );
+
+        if ( task )
+        {
+            task->run( );
+        }
+
         std::this_thread::sleep_for( sleep_time );
 
         std::this_thread::yield( );
