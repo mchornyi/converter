@@ -29,6 +29,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <limits.h>
 
 #ifdef STDC_HEADERS
 #include <stdlib.h>

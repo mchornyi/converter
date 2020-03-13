@@ -485,11 +485,11 @@ lame_getenv( char const* var )
     return 0;
 }
 
-int
-main( int argc, char* argv[] )
-{
-    return c_main( argc, argv );
-}
+//int
+//main( int argc, char* argv[] )
+//{
+//    return c_main( argc, argv );
+//}
 
 #endif
 

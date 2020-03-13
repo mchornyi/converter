@@ -9,6 +9,8 @@
 #ifndef LAME_CONSOLE_H
 #define LAME_CONSOLE_H
 
+#include <stdio.h>
+
 #if defined( _WIN32 ) && !defined( __CYGWIN__ )
 #include <windows.h>
 #endif
