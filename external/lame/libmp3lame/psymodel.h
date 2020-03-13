@@ -22,6 +22,8 @@
 #ifndef LAME_PSYMODEL_H
 #define LAME_PSYMODEL_H
 
+#include "l3side.h"
+
 int L3psycho_anal_ns( lame_internal_flags* gfc,
                       const sample_t* const buffer[ 2 ],
                       int gr,

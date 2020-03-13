@@ -22,6 +22,8 @@
 #ifndef LAME_ENCODER_H
 #define LAME_ENCODER_H
 
+#include "machine.h"
+
 /***********************************************************************
  *
  *  encoder and decoder delays

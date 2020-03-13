@@ -28,6 +28,8 @@
 #ifndef GAIN_ANALYSIS_H
 #define GAIN_ANALYSIS_H
 
+#include "machine.h"
+
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #else

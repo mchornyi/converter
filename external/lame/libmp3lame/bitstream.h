@@ -22,6 +22,9 @@
 #ifndef LAME_BITSTREAM_H
 #define LAME_BITSTREAM_H
 
+#include "encoder.h"
+#include "util.h"
+
 int getframebits( const lame_internal_flags* gfc );
 
 int format_bitstream( lame_internal_flags* gfc );

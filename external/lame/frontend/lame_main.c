@@ -569,7 +569,7 @@ lame_encoder( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, char* 
 }
 
 int
-lame_main( lame_t gf, int argc, char** argv )
+lame_main(  lame_t gf, int argc, char** argv )
 {
     char inPath[ PATH_MAX + 1 ];
     char outPath[ PATH_MAX + 1 ];

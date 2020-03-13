@@ -2,6 +2,8 @@
 #ifndef LAME_ID3_H
 #define LAME_ID3_H
 
+#include "lame.h"
+
 #define CHANGED_FLAG ( 1U << 0 )
 #define ADD_V2_FLAG ( 1U << 1 )
 #define V1_ONLY_FLAG ( 1U << 2 )

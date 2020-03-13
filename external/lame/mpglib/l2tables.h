@@ -23,6 +23,7 @@
  * not ISO-conform) ..
  * Layer-3 huffman table is in huffman.h
  */
+#include "layer2.h"
 
 const struct al_table2 alloc_0[]
     = {{4, 0},       {5, 3},       {3, -3},      {4, -7},      {5, -15},     {6, -31},

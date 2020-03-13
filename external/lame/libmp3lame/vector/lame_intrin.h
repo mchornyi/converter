@@ -22,6 +22,8 @@
 #ifndef LAME_INTRIN_H
 #define LAME_INTRIN_H
 
+#include "l3side.h"
+
 void init_xrpow_core_sse( gr_info* const cod_info, FLOAT xrpow[ 576 ], int upper, FLOAT* sum );
 
 void fht_SSE2( FLOAT*, int );

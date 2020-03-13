@@ -35,6 +35,9 @@ add_executable(${PROJECT_NAME} main.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DCONFIG_FILE="${CONFIG_FILE}")
 
+#target_link_directories(${PROJECT_NAME}
+#    PRIVATE "$<TARGET_PROPERTY:lame,LIBRARY_OUTPUT_DIRECTORY>")
+
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_arch)
 
 target_include_directories(${PROJECT_NAME}
