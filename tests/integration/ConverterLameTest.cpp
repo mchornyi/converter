@@ -6,8 +6,9 @@ namespace
 {
 using namespace converter;
 
-TEST( ConverterLameTest, Default )
+TEST( ConverterLameTest, DefaultConvert )
 {
     ConverterLame converter_lame;
+    converter_lame.convert("");
 }
 }  // namespace

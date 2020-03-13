@@ -23,9 +23,10 @@ add_compile_options(-Wall)
 add_subdirectory("external/lame")
 add_subdirectory("external/lame/frontend")
 
-file(GLOB_RECURSE SRC "src/*.cpp")
+file(GLOB_RECURSE CONVERTER_ARCH_SRC "src/*.cpp")
+list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp")
 
-add_library(${PROJECT_NAME}_arch "${SRC}")
+add_library(${PROJECT_NAME}_arch "${CONVERTER_ARCH_SRC}")
 
 target_include_directories(${PROJECT_NAME}_arch
     PUBLIC "src"
