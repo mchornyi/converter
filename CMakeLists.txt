@@ -24,20 +24,20 @@ add_subdirectory("external/lame")
 
 file(GLOB_RECURSE SRC "src/*.cpp")
 
-add_library(converter_arch "${SRC}")
+add_library(${PROJECT_NAME}_arch "${SRC}")
 
-target_include_directories(converter_arch
+target_include_directories(${PROJECT_NAME}_arch
     PUBLIC "src"
     PUBLIC "inc"
     )
 
-add_executable(converter main.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
 
-target_compile_definitions(converter PRIVATE -DCONFIG_FILE="${CONFIG_FILE}")
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DCONFIG_FILE="${CONFIG_FILE}")
 
-target_link_libraries(converter converter_arch)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_arch)
 
-target_include_directories(converter
+target_include_directories(${PROJECT_NAME}
     PRIVATE "${PROJECT_BINARY_DIR}"
     )
 
@@ -45,7 +45,7 @@ if(${BUILD_GTESTS})
     add_subdirectory(tests)
 endif()
 
-install(TARGETS converter 
+install(TARGETS ${PROJECT_NAME} 
         RUNTIME
         DESTINATION bin
        )
