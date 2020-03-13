@@ -21,33 +21,7 @@ set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/")
 add_compile_options(-Wall)
 
 add_subdirectory("external/lame")
-
-#LAME_FRONTEND_ARCH
-file(GLOB LAME_FRONTEND_SRC "external/lame/frontend/*.c")
-list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/external/lame/frontend/gpkplotting.c")
-list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/external/lame/frontend/gtkanal.c")
-list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/external/lame/frontend/mp3x.c")
-
-add_library(lame_frontend_arch "${LAME_FRONTEND_SRC}")
-target_compile_definitions(lame_frontend_arch 
-    PRIVATE -DHAVE_STDINT_H
-    PRIVATE -DHAVE_LIMITS_H
-    PRIVATE -DSTDC_HEADERS    
-    )
-
-if(NOT ieee754_float32_t)
-target_compile_definitions(lame_frontend_arch
-    PRIVATE -Dieee754_float32_t=float
-    )
-endif()
-
-target_include_directories(lame_frontend_arch
-    PRIVATE "external/lame/frontend"
-    PRIVATE "external/lame/include"
-    PRIVATE "external/lame/libmp3lame"
-    PRIVATE "external/lame/"
-    )
-#LAME_FRONTEND_ARCH
+add_subdirectory("external/lame/frontend")
 
 file(GLOB_RECURSE SRC "src/*.cpp")
 
