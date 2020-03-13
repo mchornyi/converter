@@ -1,5 +1,7 @@
 #pragma once
 
+#include "task-runner/TaskBase.h"
+
 #include <string>
 
 namespace converter
