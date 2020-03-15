@@ -1,6 +1,8 @@
 #include "gmock/gmock.h"
 
+#include "ConverterHelper.h"
 #include "ConverterLame.h"
+#include "ConverterTask.h"
 
 #include <fstream>
 #include <sstream>
@@ -43,4 +45,39 @@ TEST( ConverterLameTest, DefaultConvert )
     EXPECT_EQ( 12538, size );
     ASSERT_EQ( 0, remove( file_path_out.c_str( ) ) );
 }
+
+TEST( ConverterLameTest, ConvertTask )
+{
+    const std::string file_path_in( "./res/testcase.wav" );
+    const std::string file_path_out( "./res/testcase.mp3" );
+
+    ConverterLame converter_lame;
+
+    auto converter_task( ConverterHelper::make_converter_task_dafault(
+        &converter_lame, file_path_in, file_path_out ) );
+
+    ASSERT_TRUE( converter_task );
+
+    const bool res = converter_task->run( );
+
+    EXPECT_TRUE( res );
+
+    const auto size = file_size( file_path_out );
+    EXPECT_EQ( 12538, size );
+    ASSERT_EQ( 0, remove( file_path_out.c_str( ) ) );
+}
+
+TEST( ConverterLameTest, ConvertTaskNoInputFile )
+{
+    const std::string file_path_in( "./res/testcase1.wav" );
+    const std::string file_path_out( "./res/testcase.mp3" );
+
+    ConverterLame converter_lame;
+
+    auto converter_task( ConverterHelper::make_converter_task_dafault(
+        &converter_lame, file_path_in, file_path_out ) );
+
+    ASSERT_FALSE( converter_task );
+}
+
 }  // namespace

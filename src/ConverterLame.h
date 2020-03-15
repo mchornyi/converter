@@ -6,7 +6,7 @@
 
 namespace converter
 {
-class ConverterLame : public IConverter
+class ConverterLame final: public IConverter
 {
 public:
     ConverterLame( );

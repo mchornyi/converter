@@ -4,7 +4,7 @@ project(integration)
 
 file(GLOB_RECURSE UNIT_SRC "*.cpp")
 
-set(CONVERTER_LAME_SRC "../../src/ConverterLame.cpp")
+set(CONVERTER_LAME_SRC "../../src/ConverterLame.cpp" "../../src/ConverterHelper.cpp")
 
 add_executable(${PROJECT_NAME} "${UNIT_SRC}" "${CONVERTER_LAME_SRC}")
 

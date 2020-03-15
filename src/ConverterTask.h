@@ -8,10 +8,15 @@ class IConverter;
 
 class ConverterTask final : public task_runner::TaskBase
 {
+    friend class ConverterHelper;
+
 public:
-    ConverterTask( converter::IConverter* converter, std::string arguments );
+    ConverterTask( );
 
     ~ConverterTask( );
+
+private:
+    ConverterTask( converter::IConverter* converter, std::string arguments );
 
 private:
     virtual task_runner::ErrorInfo run_internal( ) override;
