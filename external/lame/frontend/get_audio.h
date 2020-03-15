@@ -83,7 +83,7 @@ extern "C"
     extern size_t sizeOfOldTag( lame_t gf );
     extern unsigned char* getOldTag( lame_t gf );
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 }
 #endif
 
