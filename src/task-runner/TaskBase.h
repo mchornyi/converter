@@ -31,6 +31,12 @@ struct ErrorInfo
     {
     }
 
+    bool
+    operator==( const ErrorInfo& rhs ) const
+    {
+        return error == rhs.error && msg == rhs.msg;
+    }
+
     Error error;
     std::string msg;
 };

@@ -35,7 +35,9 @@ TEST( ConverterLameTest, DefaultConvert )
     argumets << " ./res/testcase.wav";
     argumets << " " << file_path_out;
 
-    converter_lame.convert( argumets.str( ) );
+    const auto convert_res = converter_lame.convert( argumets.str( ) );
+
+    EXPECT_EQ( task_runner::ErrorInfo(), convert_res );
 
     const auto size = file_size( file_path_out );
     EXPECT_EQ( 12538, size );
