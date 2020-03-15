@@ -13,7 +13,8 @@ using TaskID = uint32_t;
 enum class Error : int32_t
 {
     None,
-    InvalidArgument
+    InvalidArgument,
+    FatalLameInit
 };
 
 struct ErrorInfo
