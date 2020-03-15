@@ -416,7 +416,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
     int iread, imp3, owrite, in_limit = 0;
     size_t id3v2_size;
 
-    encoder_progress_begin( gf, inPath, outPath );
+    //encoder_progress_begin( gf, inPath, outPath );
 
     id3v2_size = lame_get_id3v2_tag( gf, 0, 0 );
     if ( id3v2_size > 0 )
@@ -429,7 +429,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
             free( id3v2tag );
             if ( written != n_bytes )
             {
-                encoder_progress_end( gf );
+                //encoder_progress_end( gf );
                 error_printf( "Error writing ID3v2 tag \n" );
                 return 1;
             }
@@ -444,7 +444,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
             size_t owrite = fwrite( id3v2tag, 1, id3v2_size, outf );
             if ( owrite != id3v2_size )
             {
-                encoder_progress_end( gf );
+                //encoder_progress_end( gf );
                 error_printf( "Error writing ID3v2 tag \n" );
                 return 1;
             }
@@ -476,7 +476,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
             do
             {
                 int const chunk = rest < in_limit ? rest : in_limit;
-                encoder_progress( gf );
+                //encoder_progress( gf );
 
                 /* encode */
 
@@ -525,7 +525,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
         return 1;
     }
 
-    encoder_progress_end( gf );
+    //encoder_progress_end( gf );
 
     owrite = (int)fwrite( mp3buffer, 1, imp3, outf );
     if ( owrite != imp3 )
@@ -553,7 +553,7 @@ lame_encoder_loop( lame_global_flags* gf, FILE* outf, int nogap, char* inPath, c
     }
     if ( global_ui_config.silent <= 0 )
     {
-        print_trailing_info( gf );
+        //print_trailing_info( gf );
     }
     return 0;
 }
@@ -620,8 +620,8 @@ lame_main(  lame_t gf, int argc, char** argv )
     {
         return ret == -2 ? 0 : 1;
     }
-    if ( global_ui_config.update_interval < 0. )
-        global_ui_config.update_interval = 2.;
+    //if ( global_ui_config.update_interval < 0. )
+    //    global_ui_config.update_interval = 2.;
 
     if ( outPath[ 0 ] != '\0' && max_nogap > 0 )
     {
@@ -678,10 +678,10 @@ lame_main(  lame_t gf, int argc, char** argv )
         return ret;
     }
 
-    if ( global_ui_config.silent > 0 )
-    {
-        global_ui_config.brhist = 0; /* turn off VBR histogram */
-    }
+    //if ( global_ui_config.silent > 0 )
+    //{
+    //    global_ui_config.brhist = 0; /* turn off VBR histogram */
+    //}
 
     if ( lame_get_decode_only( gf ) )
     {

@@ -1666,12 +1666,12 @@ parse_args_( lame_global_flags* gfp,
     inPath[ 0 ] = '\0';
     outPath[ 0 ] = '\0';
     /* turn on display options. user settings may turn them off below */
-    global_ui_config.silent = 0; /* default */
-    global_ui_config.brhist = 1;
-    global_decoder.mp3_delay = 0;
-    global_decoder.mp3_delay_set = 0;
-    global_decoder.disable_wav_header = 0;
-    global_ui_config.print_clipping_info = 0;
+    //global_ui_config.silent = 0; /* default */
+    //global_ui_config.brhist = 1;
+    //global_decoder.mp3_delay = 0;
+    //global_decoder.mp3_delay_set = 0;
+    //global_decoder.disable_wav_header = 0;
+    //global_ui_config.print_clipping_info = 0;
     id3tag_init( gfp );
 
     /* process args */
@@ -2140,16 +2140,16 @@ parse_args_( lame_global_flags* gfp,
                  * I             => stdin
                  */
                 T_ELIF( "quiet" )
-                global_ui_config.silent = 10; /* on a scale from 1 to 10 be very silent */
+                //global_ui_config.silent = 10; /* on a scale from 1 to 10 be very silent */
 
                 T_ELIF( "silent" )
-                global_ui_config.silent = 9;
+                //global_ui_config.silent = 9;
 
                 T_ELIF( "brief" )
-                global_ui_config.silent = -5; /* print few info on screen */
+                //global_ui_config.silent = -5; /* print few info on screen */
 
                 T_ELIF( "verbose" )
-                global_ui_config.silent = -10; /* print a lot on screen */
+                //global_ui_config.silent = -10; /* print a lot on screen */
 
                 T_ELIF2( "version", "license" )
                 print_license( stdout );
@@ -2207,8 +2207,8 @@ parse_args_( lame_global_flags* gfp,
 
                 T_ELIF( "disptime" )
                 argUsed = getDoubleValue( token, nextArg, &double_value );
-                if ( argUsed )
-                    global_ui_config.update_interval = (float)double_value;
+                //if ( argUsed )
+                    //global_ui_config.update_interval = (float)double_value;
 
                 T_ELIF( "nogaptags" )
                 nogap_tags = 1;
@@ -2578,7 +2578,7 @@ parse_args_( lame_global_flags* gfp,
                         error_printf( "WARNING: -%c is obsolete.\n", c );
                         break;
                     case 'S':
-                        global_ui_config.silent = 5;
+                        //global_ui_config.silent = 5;
                         break;
                     case 'X':
                         /*  experimental switch -X:
@@ -2718,10 +2718,10 @@ parse_args_( lame_global_flags* gfp,
 
     if ( inPath[ 0 ] == '-' )
     {
-        if ( global_ui_config.silent == 0 )
-        { /* user didn't overrule default behaviour */
-            global_ui_config.silent = 1;
-        }
+        //if ( global_ui_config.silent == 0 )
+        //{ /* user didn't overrule default behaviour */
+        //    global_ui_config.silent = 1;
+        //}
     }
 #ifdef WIN32
     else
