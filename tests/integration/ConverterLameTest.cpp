@@ -27,17 +27,17 @@ TEST( ConverterLameTest, DefaultConvert )
 {
     ConverterLame converter_lame;
 
+    const std::string file_path_in( "./res/testcase.wav" );
     const std::string file_path_out( "./res/testcase.mp3" );
 
     std::stringstream argumets;
 
     argumets << "lame -q4 -b160";  // good quality
-    argumets << " ./res/testcase.wav";
-    argumets << " " << file_path_out;
+    argumets << " " << file_path_in << " " << file_path_out;
 
     const auto convert_res = converter_lame.convert( argumets.str( ) );
 
-    EXPECT_EQ( task_runner::ErrorInfo(), convert_res );
+    EXPECT_EQ( task_runner::ErrorInfo( ), convert_res );
 
     const auto size = file_size( file_path_out );
     EXPECT_EQ( 12538, size );
