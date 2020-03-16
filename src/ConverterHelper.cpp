@@ -23,7 +23,7 @@ file_exists( const std::string& file_path )
 namespace converter
 {
 std::unique_ptr< ConverterTask >
-ConverterHelper::make_converter_task_dafault( IConverter* converter,
+ConverterHelper::make_lame_converter_task_dafault( IConverter* converter,
                                               const std::string& file_path_in,
                                               const std::string& file_path_out )
 {

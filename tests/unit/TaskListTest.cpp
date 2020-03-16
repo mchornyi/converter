@@ -42,6 +42,21 @@ TEST( TaskListTest, PushPopSize )
     ASSERT_EQ( &task, task_tmp );
 }
 
+TEST( TaskListTest, ListSize )
+{
+    TaskBase task1;
+    TaskBase task2;
+    TaskBase task3;
+
+    TaskList task_list;
+
+    ASSERT_TRUE( task_list.push( &task1 ) );
+    ASSERT_TRUE( task_list.push( &task2 ) );
+    ASSERT_TRUE( task_list.push( &task3 ) );
+
+    ASSERT_EQ( 3, task_list.size( ) );
+}
+
 TEST( TaskListTest, PriorityCheck )
 {
     TaskBase task_medium;

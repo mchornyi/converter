@@ -1,5 +1,5 @@
-#include "task-runner/TaskBase.h"
 #include "task-runner/TaskList.h"
+#include "task-runner/TaskBase.h"
 
 #include <mutex>
 #include <set>
@@ -12,7 +12,7 @@ auto task_compare = []( const TaskBase* lhs, const TaskBase* rhs ) {
         return false;
     }
 
-    return lhs->get_priority( ) < rhs->get_priority( );
+    return ( lhs->get_priority( ) < rhs->get_priority( ) ) || ( ( lhs < rhs ) );
 };
 
 struct TaskList::Impl
@@ -30,16 +30,16 @@ struct TaskList::Impl
             return false;
         }
 
-        if ( task->get_state() != State::None )
+        if ( task->get_state( ) != State::None )
         {
             return false;
         }
 
         const std::lock_guard< std::mutex > lock( mtx );
-        
+
         auto result = tasks_list.insert( task );
-        
-        task->set_state(State::Queued);
+
+        task->set_state( State::Queued );
 
         return result.second;
     }
@@ -58,7 +58,7 @@ struct TaskList::Impl
         --it;
         tasks_list.erase( it );
 
-        (*it)->set_state(State::None);
+        ( *it )->set_state( State::None );
 
         return *it;
     }

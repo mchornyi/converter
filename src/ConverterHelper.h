@@ -9,7 +9,7 @@ class IConverter;
 class ConverterHelper
 {
 public:
-    static std::unique_ptr< ConverterTask > make_converter_task_dafault(
+    static std::unique_ptr< ConverterTask > make_lame_converter_task_dafault(
         IConverter*, const std::string& file_path_in, const std::string& file_path_out );
 };
 
