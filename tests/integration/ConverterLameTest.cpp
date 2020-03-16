@@ -132,7 +132,7 @@ TEST( ConverterLameTest, TaskRunner )
 
         const auto size = file_size( ss.str( ) );
         EXPECT_EQ( expected_file_size_testcase_mp3, size );
-        ASSERT_EQ( 0, remove( ss.str( ).c_str( ) ) );
+        EXPECT_EQ( 0, remove( ss.str( ).c_str( ) ) );
     }
 
     helpers::stop_task_runner( task_runner );
