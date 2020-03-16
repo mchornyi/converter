@@ -27,6 +27,9 @@ file(GLOB_RECURSE CONVERTER_ARCH_SRC "src/*.cpp")
 list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp")
 list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHelper.cpp")
 
+set(CONVERTER_COMMON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHelper.cpp" )
+set(CONVERTER_LAME_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp" )
+
 add_library(${PROJECT_NAME}_arch "${CONVERTER_ARCH_SRC}")
 
 target_include_directories(${PROJECT_NAME}_arch

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "MockTaskBaseListener.h"
-#include "Helpers.h"
+#include "common/Helpers.h"
 #include "task-runner/TaskBase.h"
 #include "task-runner/TaskRunner.h"
 #include "task-runner/TaskThread.h"

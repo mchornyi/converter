@@ -1,8 +1,11 @@
 #include "gtest/gtest.h"
 
 #include "ConverterTask.h"
-#include "Helpers.h"
+#include "ConverterHelper.h"
+
+#include "common/Helpers.h"
 #include "task-runner/TaskRunner.h"
+
 #include "MockIConverter.h"
 #include "MockTaskBaseListener.h"
 namespace
@@ -15,13 +18,15 @@ TEST( ConverterTask, Run )
 
     EXPECT_CALL( mock_i_Converter, convert );
 
-    ConverterTask task( &mock_i_Converter, "" );
+    auto task( ConverterHelper::make_converter_task_default( &mock_i_Converter ) );
 
-    task.run( );
+    ASSERT_TRUE( task );
 
-    ASSERT_EQ( task_runner::State::Completed, task.get_state( ) );
+    task->run( );
 
-    const auto error_info = task.get_error( );
+    ASSERT_EQ( task_runner::State::Completed, task->get_state( ) );
+
+    const auto error_info = task->get_error( );
     ASSERT_EQ( task_runner::Error::None, error_info.error );
     ASSERT_EQ( std::string( "" ), error_info.msg );
 }
@@ -32,19 +37,21 @@ TEST( ConverterTask, RunTaskRunnerAndCheckTaskState )
 
     EXPECT_CALL( mock_i_Converter, convert );
 
-    ConverterTask task( &mock_i_Converter, "" );
+    auto task( ConverterHelper::make_converter_task_default( &mock_i_Converter ) );
 
-    auto task_future = task.get_future( );
+    ASSERT_TRUE( task );
+
+    auto task_future = task->get_future( );
 
     task_mocks::MockTaskListener mock_task_listener;
 
     EXPECT_CALL( mock_task_listener, on_completed );
 
-    ASSERT_TRUE( task.add_listener( &mock_task_listener ) );
+    ASSERT_TRUE( task->add_listener( &mock_task_listener ) );
 
     task_runner::TaskRunner task_runner;
 
-    ASSERT_TRUE( task_runner.add_task( &task ) );
+    ASSERT_TRUE( task_runner.add_task( task.get( ) ) );
 
     const std::chrono::milliseconds span( 300 );
     auto result = task_future.wait_for( span );

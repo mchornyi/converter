@@ -1,4 +1,5 @@
 #include "ConverterHelper.h"
+#include "ConverterTask.h"
 
 #include "common/Log.h"
 
@@ -23,9 +24,15 @@ file_exists( const std::string& file_path )
 namespace converter
 {
 std::unique_ptr< ConverterTask >
+ConverterHelper::make_converter_task_default( IConverter* converter )
+{
+    return std::unique_ptr< ConverterTask >( new ConverterTask( converter, "" ) );
+}
+
+std::unique_ptr< ConverterTask >
 ConverterHelper::make_lame_converter_task_dafault( IConverter* converter,
-                                              const std::string& file_path_in,
-                                              const std::string& file_path_out )
+                                                   const std::string& file_path_in,
+                                                   const std::string& file_path_out )
 {
     if ( converter == nullptr || !file_exists( file_path_in ) )
     {

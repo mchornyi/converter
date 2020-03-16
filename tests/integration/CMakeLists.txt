@@ -4,9 +4,11 @@ project(integration)
 
 file(GLOB_RECURSE UNIT_SRC "*.cpp")
 
-set(CONVERTER_LAME_SRC "../../src/ConverterLame.cpp" "../../src/ConverterHelper.cpp")
-
-add_executable(${PROJECT_NAME} "${UNIT_SRC}" "${CONVERTER_LAME_SRC}")
+add_executable(${PROJECT_NAME} "${UNIT_SRC}" 
+    "${CONVERTER_COMMON_SRC}"
+    "${CONVERTER_LAME_SRC}"
+    "${TEST_COMMON_SRC}"
+    )
 
 target_link_libraries(${PROJECT_NAME} 
     gmock_main 
@@ -19,6 +21,7 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE "$<TARGET_PROPERTY:converter_arch,INCLUDE_DIRECTORIES>"
     PRIVATE "$<TARGET_PROPERTY:lame,INCLUDE_DIRECTORIES>"
     PRIVATE "$<TARGET_PROPERTY:lame_frontend_arch,INCLUDE_DIRECTORIES>"
+    PRIVATE "${TEST_COMMON_INC}"
     )
 
 target_link_directories(${PROJECT_NAME}
