@@ -74,7 +74,7 @@ TEST( ConverterLameTest, ConvertTask )
 
 TEST( ConverterLameTest, ConvertTaskNoInputFile )
 {
-    const std::string file_path_in( "./res/testcase1.wav" );
+    const std::string file_path_in( "./res/no-existed-file.wav" );
     const std::string file_path_out( "./res/testcase.mp3" );
 
     ConverterLame converter_lame;
