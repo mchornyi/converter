@@ -4,8 +4,8 @@
 #include "task-runner/TaskRunner.h"
 
 #include <chrono>
+#include <fstream>
 #include <thread>
-
 namespace helpers
 {
 void
@@ -29,4 +29,18 @@ stop_task_runner( task_runner::TaskRunner& task_runner )
 
     task_runner.join( );
 }
+
+long long
+file_size( const std::string& file_path )
+{
+    std::ifstream is( file_path, std::ifstream::binary );
+
+    is.seekg( 0, is.end );
+
+    const auto length = is.tellg( );
+
+    is.close( );
+
+    return length;
 }
+}  // namespace helpers

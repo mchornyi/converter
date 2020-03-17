@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.10)
 
 project(integration)
 
-file(GLOB_RECURSE UNIT_SRC "*.cpp")
+file(GLOB_RECURSE INTEGRATION_SRC "*.cpp")
 
-add_executable(${PROJECT_NAME} "${UNIT_SRC}" 
+add_executable(${PROJECT_NAME} "${INTEGRATION_SRC}" 
     "${CONVERTER_COMMON_SRC}"
-    "${CONVERTER_LAME_SRC}"
+    "${CONVERTER_SRC}"
     "${TEST_COMMON_SRC}"
     )
 
 target_link_libraries(${PROJECT_NAME} 
-    gmock_main 
+    gtest_main 
     converter_arch
     lame
     lame_frontend_arch

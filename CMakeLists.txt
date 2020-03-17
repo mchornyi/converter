@@ -28,7 +28,9 @@ list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLa
 list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHelper.cpp")
 
 set(CONVERTER_COMMON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHelper.cpp" )
-set(CONVERTER_LAME_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp" )
+set(CONVERTER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterApp.cpp"
+    )
 
 add_library(${PROJECT_NAME}_arch "${CONVERTER_ARCH_SRC}")
 
@@ -37,17 +39,27 @@ target_include_directories(${PROJECT_NAME}_arch
     PUBLIC "inc"
     )
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp 
+    "${CONVERTER_SRC}"
+    "${CONVERTER_COMMON_SRC}"
+    )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DCONFIG_FILE="${CONFIG_FILE}")
 
 target_link_directories(${PROJECT_NAME}
-    PRIVATE "$<TARGET_PROPERTY:lame,LIBRARY_OUTPUT_DIRECTORY>")
+    PRIVATE "$<TARGET_PROPERTY:lame,LIBRARY_OUTPUT_DIRECTORY>"
+    PRIVATE "$<TARGET_PROPERTY:lame_frontend_arch,LIBRARY_OUTPUT_DIRECTORY>"
+    )
 
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_arch lame)
+target_link_libraries(${PROJECT_NAME} 
+    ${PROJECT_NAME}_arch 
+    lame
+    lame_frontend_arch
+    pthread)
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE "${PROJECT_BINARY_DIR}"
+    PRIVATE "$<TARGET_PROPERTY:lame_frontend_arch,INCLUDE_DIRECTORIES>"
     )
 
 if(${BUILD_GTESTS})

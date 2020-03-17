@@ -1,4 +1,4 @@
-#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 #include "ConverterHelper.h"
 #include "ConverterLame.h"
@@ -7,7 +7,6 @@
 
 #include "task-runner/TaskRunner.h"
 
-#include <fstream>
 #include <sstream>
 
 namespace
@@ -15,20 +14,6 @@ namespace
 using namespace converter;
 
 const uint32_t expected_file_size_testcase_mp3( 12538 );
-
-long long
-file_size( const std::string& file_path )
-{
-    std::ifstream is( file_path, std::ifstream::binary );
-
-    is.seekg( 0, is.end );
-
-    const auto length = is.tellg( );
-
-    is.close( );
-
-    return length;
-}
 
 TEST( ConverterLameTest, DefaultConvert )
 {
@@ -46,7 +31,7 @@ TEST( ConverterLameTest, DefaultConvert )
 
     EXPECT_EQ( task_runner::ErrorInfo( ), convert_res );
 
-    const auto size = file_size( file_path_out );
+    const auto size = helpers::file_size( file_path_out );
     EXPECT_EQ( expected_file_size_testcase_mp3, size );
     ASSERT_EQ( 0, remove( file_path_out.c_str( ) ) );
 }
@@ -67,7 +52,7 @@ TEST( ConverterLameTest, ConvertTask )
 
     EXPECT_TRUE( res );
 
-    const auto size = file_size( file_path_out );
+    const auto size = helpers::file_size( file_path_out );
     EXPECT_EQ( expected_file_size_testcase_mp3, size );
     ASSERT_EQ( 0, remove( file_path_out.c_str( ) ) );
 }
@@ -130,7 +115,7 @@ TEST( ConverterLameTest, TaskRunner )
         std::stringstream ss;
         ss << "./res/testcase" << i << ".mp3";
 
-        const auto size = file_size( ss.str( ) );
+        const auto size = helpers::file_size( ss.str( ) );
         EXPECT_EQ( expected_file_size_testcase_mp3, size );
         EXPECT_EQ( 0, remove( ss.str( ).c_str( ) ) );
     }
