@@ -10,7 +10,7 @@ public:
     ConverterApp( std::string path_folder );
     ~ConverterApp( );
 
-    void run();
+    bool run();
 
 private:
     struct Impl;

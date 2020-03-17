@@ -72,8 +72,8 @@ TEST( ConverterLameTest, ConvertTaskNoInputFile )
 
 TEST( ConverterLameTest, TaskRunner )
 {
-    const u_int8_t thread_count = 8;
-    const uint32_t tasks_count = 100;
+    const u_int8_t thread_count = 2;
+    const uint32_t tasks_count = 10;
 
     task_runner::TaskRunner task_runner( thread_count );
 

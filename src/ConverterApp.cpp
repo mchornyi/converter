@@ -12,10 +12,53 @@
 #include <thread>
 #include <vector>
 
+#include <dirent.h>
+
 using TaskContainer = std::vector< std::unique_ptr< task_runner::TaskBase > >;
 
 namespace
 {
+std::vector< std::string >
+list_files( const std::string& working_dir )
+{
+    std::vector< std::string > res;
+
+    DIR* directory = opendir( working_dir.c_str( ) );
+    if ( directory == nullptr )
+    {
+        return {};
+    }
+
+    struct dirent* dir_ent;
+
+    while ( ( dir_ent = readdir( directory ) ) != nullptr )
+    {
+        const std::string file_path = working_dir + "/" + dir_ent->d_name;
+        res.emplace_back( file_path );
+    }
+
+    closedir( directory );
+
+    return res;
+}
+
+std::vector< std::string >
+filter_list_files( const std::vector< std::string >& files, const std::string& filter )
+{
+    std::vector< std::string > res;
+    for ( const auto& item : files )
+    {
+        const auto pos = item.find( filter );
+
+        if ( pos != std::string::npos && ( ( item.size( ) - pos ) == 4 ) )
+        {
+            res.emplace_back( item );
+        }
+    }
+
+    return res;
+}
+
 void
 stop_task_runner( task_runner::TaskRunner& task_runner )
 {
@@ -48,29 +91,38 @@ stop_task_runner( task_runner::TaskRunner& task_runner )
 TaskContainer
 make_tasks( converter::IConverter* converter, const std::string& working_dir )
 {
-    struct stat info;
+    const std::string wav_str( ".wav" );
+    const std::string mp3_str( ".mp3" );
 
-    if ( stat( working_dir.c_str( ), &info ) != 0 )
-    {
-        std::cerr << "Cannot access " << working_dir << "\n";
-        return {};
-    }
+    const auto files = list_files( working_dir );
 
-    // TODO: Read the folder
+    const auto files_wav = filter_list_files( files, wav_str );
+
     TaskContainer tasks;
 
-    int files_number = 0;
+    tasks.reserve( files_wav.size( ) );
 
-    tasks.reserve( files_number );
-
-    std::string file_path_in;
-    std::string file_path_out;
-
-    auto converter_task( converter::ConverterHelper::make_lame_converter_task_dafault(
-        converter, file_path_in, file_path_out ) );
-
-    if ( converter_task )
+    for ( const auto& file_wav : files_wav )
     {
+        std::string file_path_out = file_wav;
+        auto pos = file_path_out.find( wav_str );
+        if ( pos == std::string::npos )
+        {
+            LOG( "ERROR: Wrong file extension %s", file_path_out.c_str( ) );
+            continue;
+        }
+
+        file_path_out.replace( pos, mp3_str.size( ), mp3_str );
+
+        auto converter_task( converter::ConverterHelper::make_lame_converter_task_dafault(
+            converter, file_wav, file_path_out ) );
+
+        if ( !converter_task )
+        {
+            LOG( "ERROR: Cannot create conversion task for file %s", file_wav.c_str( ) );
+            continue;
+        }
+
         tasks.emplace_back( std::move( converter_task ) );
     }
 
@@ -91,8 +143,17 @@ struct ConverterApp::Impl
 };
 
 ConverterApp::ConverterApp( std::string working_dir )
-    : m_pimpl( new Impl( ) )
 {
+    struct stat info;
+
+    if ( stat( working_dir.c_str( ), &info ) != 0 )
+    {
+        std::cerr << "Cannot access " << working_dir << "\n";
+        return;
+    }
+
+    m_pimpl.reset( new Impl( ) );
+
     m_pimpl->working_dir = std::move( working_dir );
 
     auto threads_number = std::thread::hardware_concurrency( );
@@ -108,25 +169,30 @@ ConverterApp::~ConverterApp( )
 {
 }
 
-void
+bool
 ConverterApp::run( )
 {
-    for ( auto& task : m_pimpl->tasks )
+    if ( !m_pimpl )
     {
-        m_pimpl->task_Runner->add_task( task.get( ) );
+        return false;
     }
 
     m_pimpl->tasks = make_tasks( &m_pimpl->converter_lame, m_pimpl->working_dir );
 
     for ( auto& task : m_pimpl->tasks )
     {
+        m_pimpl->task_Runner->add_task( task.get( ) );
+    }
+
+    for ( auto& task : m_pimpl->tasks )
+    {
         auto task_future = task->get_future( );
-        // const std::chrono::milliseconds span( 1 * 60 * 1000 );
-        // auto result = task_future.wait_for( span );
         task_future.wait( );
     }
 
     stop_task_runner( *m_pimpl->task_Runner.get( ) );
+
+    return true;
 }
 
 }  // namespace converter
