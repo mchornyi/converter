@@ -18,7 +18,11 @@ list_files( const std::string& working_dir )
 {
     std::vector< std::string > res;
 
+<<<<<<< HEAD
     #if defined(_WIN32)
+=======
+    #ifdef WIN32
+>>>>>>> WIN32 Adaptation
     HANDLE hFind = INVALID_HANDLE_VALUE;
     WIN32_FIND_DATA fdata;
  
@@ -42,7 +46,13 @@ list_files( const std::string& working_dir )
                 }
                 else
                 {
+<<<<<<< HEAD
                     res.push_back(fdata.cFileName);
+=======
+					const std::string file_path = dir + "\\" + fdata.cFileName;
+                    res.push_back(file_path);
+					std::cout << "File to convert: " << file_path << "\n";
+>>>>>>> WIN32 Adaptation
                 }
             }
         }
@@ -102,7 +112,11 @@ filter_list_files( const std::vector< std::string >& files, const std::string& f
 bool
 dir_exist( const std::string& dir )
 {
+<<<<<<< HEAD
     #if defined(_WIN32)
+=======
+    #ifdef WIN32
+>>>>>>> WIN32 Adaptation
     return (_access_s( dir.c_str(), 0 ) == 0);
     #else
     struct stat info;
