@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(converter)
 
+find_package (Threads)
+
 set(Converter_VERSION_MAJOR 1)
 
 set(Converter_VERSION_MINOR 0)
@@ -18,7 +20,9 @@ set(CONFIG_FILE "${PROJECT_BINARY_DIR}/ConverterConfig.h")
 
 set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc/")
 
-add_compile_options(-Wall)
+if(NOT WIN32)
+    add_compile_options(-Wall)
+endif()
 
 add_subdirectory("external/lame")
 add_subdirectory("external/lame/frontend")
@@ -33,7 +37,7 @@ set(CONVERTER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/converter/ConverterLame.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterAppSimple.cpp"
     )
 
-add_library(${PROJECT_NAME}_arch "${CONVERTER_ARCH_SRC}")
+add_library(${PROJECT_NAME}_arch STATIC "${CONVERTER_ARCH_SRC}")
 
 target_include_directories(${PROJECT_NAME}_arch
     PUBLIC "src"
@@ -55,8 +59,8 @@ target_link_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     ${PROJECT_NAME}_arch 
     lame
-    lame_frontend_arch
-    pthread)
+    lame_frontend_arch)
+    #pthread)
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE "${PROJECT_BINARY_DIR}"

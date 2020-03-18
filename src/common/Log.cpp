@@ -6,8 +6,9 @@
 #include <iomanip>
 #include <sstream>
 #include <thread>
+#include <iostream>
 
-namespace log
+namespace logger
 {
 void
 log_message( const char* file, const char* function, int line, const char* format, ... )
@@ -15,7 +16,7 @@ log_message( const char* file, const char* function, int line, const char* forma
     char buffer[ 256 ];
     va_list args;
     va_start( args, format );
-    vsprintf( buffer, format, args );
+    vsprintf_s( buffer, format, args );
     va_end( args );
 
     std::cout << format_message( file, function, line, buffer );
@@ -41,4 +42,4 @@ format_message( const char* file, const char* function, int line, const char* me
 
     return ss.str( );
 }
-}  // namespace log
+}  // namespace logger

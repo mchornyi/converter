@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "common/common.h"
+
 namespace task_runner
 {
     class TaskBase;

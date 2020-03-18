@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 #include "frontend/main.h"
 
@@ -46,6 +47,7 @@ ConverterLame::convert( std::string argumets )
     }
     else
     {
+		std::cout << "Run Lame with the following arguments: " << argumets << "\n";
         lame_main( gf, args.size( ) - 1, args.data( ) );
         lame_close( gf );
     }

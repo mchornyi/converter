@@ -382,7 +382,11 @@ typedef struct get_audio_global_data_struct
     unsigned char* in_id3v2_tag;
 } get_audio_global_data;
 
+#if defined(_WIN32)
+__declspec( thread ) get_audio_global_data global;
+#else
 __thread get_audio_global_data global;
+#endif
 
 #ifdef AMIGA_MPEGA
 int lame_decode_initfile( const char* fullname, mp3data_struct* const mp3data );

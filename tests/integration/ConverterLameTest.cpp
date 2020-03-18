@@ -9,6 +9,12 @@
 
 #include <sstream>
 
+#ifdef WIN32
+const std::string g_working_dir( "..\\res\\" );   
+#else
+const std::string g_working_dir( "./res/" );
+#endif
+
 namespace
 {
 using namespace converter;
@@ -19,8 +25,8 @@ TEST( ConverterLameTest, DefaultConvert )
 {
     ConverterLame converter_lame;
 
-    const std::string file_path_in( "./res/testcase.wav" );
-    const std::string file_path_out( "./res/testcase.mp3" );
+    const std::string file_path_in = g_working_dir + "testcase.wav";
+    const std::string file_path_out = g_working_dir + "testcase.mp3";
 
     std::stringstream argumets;
 
@@ -38,8 +44,8 @@ TEST( ConverterLameTest, DefaultConvert )
 
 TEST( ConverterLameTest, ConvertTask )
 {
-    const std::string file_path_in( "./res/testcase.wav" );
-    const std::string file_path_out( "./res/testcase.mp3" );
+    const std::string file_path_in = g_working_dir + "testcase.wav";
+    const std::string file_path_out = g_working_dir + "testcase.mp3";
 
     ConverterLame converter_lame;
 
@@ -59,8 +65,8 @@ TEST( ConverterLameTest, ConvertTask )
 
 TEST( ConverterLameTest, ConvertTaskNoInputFile )
 {
-    const std::string file_path_in( "./res/no-existed-file.wav" );
-    const std::string file_path_out( "./res/testcase.mp3" );
+    const std::string file_path_in = g_working_dir + "no-existed-file.wav";
+    const std::string file_path_out = g_working_dir + "testcase.mp3";
 
     ConverterLame converter_lame;
 
@@ -77,7 +83,7 @@ TEST( ConverterLameTest, TaskRunner )
 
     task_runner::TaskRunner task_runner( thread_count );
 
-    const std::string file_path_in( "./res/testcase.wav" );
+    const std::string file_path_in = g_working_dir + "testcase.wav";
 
     ConverterLame converter_lame;
 
@@ -88,7 +94,7 @@ TEST( ConverterLameTest, TaskRunner )
     for ( uint32_t i = 0; i < tasks_count; ++i )
     {
         std::stringstream ss;
-        ss << "./res/testcase" << i << ".mp3";
+        ss << g_working_dir << "testcase" << i << ".mp3";
 
         converter_tasks.emplace_back( ConverterHelper::make_lame_converter_task_dafault(
             &converter_lame, file_path_in, ss.str( ) ) );
@@ -113,7 +119,7 @@ TEST( ConverterLameTest, TaskRunner )
     for ( uint32_t i = 0; i < tasks_count; ++i )
     {
         std::stringstream ss;
-        ss << "./res/testcase" << i << ".mp3";
+        ss << g_working_dir << "testcase" << i << ".mp3";
 
         const auto size = helpers::file_size( ss.str( ) );
         EXPECT_EQ( expected_file_size_testcase_mp3, size );

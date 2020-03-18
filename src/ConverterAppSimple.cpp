@@ -4,6 +4,7 @@
 #include "common/Utils.h"
 
 #include <thread>
+#include <iostream>
 
 namespace converter
 {
@@ -48,6 +49,7 @@ ConverterAppSimple::run( std::string working_dir )
 
     if ( m_files_to_convert.empty( ) )
     {
+		std::cout << "No files for convertion\n";
         return false;
     }
 

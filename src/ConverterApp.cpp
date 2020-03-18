@@ -9,6 +9,8 @@
 #include "task-runner/TaskBase.h"
 #include "task-runner/TaskRunner.h"
 
+#include <iostream>
+
 using TaskContainer = std::vector< std::unique_ptr< task_runner::TaskBase > >;
 
 namespace

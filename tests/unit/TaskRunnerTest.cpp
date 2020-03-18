@@ -13,10 +13,12 @@ namespace
 {
 using namespace task_runner;
 
+#ifndef WIN32
 TEST( TaskRunnerDeathTest, NoJoin )
 {
     ASSERT_DEATH( { TaskRunner task_runner; }, TaskThread::get_death_error_msg( ) );
 }
+#endif
 
 TEST( TaskRunnerTest, Stop )
 {
