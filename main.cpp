@@ -5,13 +5,11 @@
 #define Converter_VERSION_MINOR 0
 #endif
 
-#include "ConverterApp.h"
+//#include "ConverterApp.h"
 #include "ConverterAppSimple.h"
+#include "common/Utils.h"
 
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <iostream>
-#include <string>
 
 int
 main( int argc, const char* argv[] )
@@ -29,9 +27,7 @@ main( int argc, const char* argv[] )
 
     std::string folder_path( argv[ 1 ] );
 
-    struct stat info;
-
-    if ( stat( folder_path.c_str( ), &info ) != 0 )
+    if ( !utils::dir_exist(folder_path) )
     {
         std::cerr << "Cannot access " << folder_path << "\n";
         return 1;
