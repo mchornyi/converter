@@ -1,10 +1,10 @@
 #include "ConverterApp.h"
 
+#include "common/Log.h"
+#include "common/Utils.h"
 #include "converter/ConverterHelper.h"
 #include "converter/ConverterLame.h"
 #include "converter/ConverterTask.h"
-#include "common/Log.h"
-#include "common/Utils.h"
 
 #include "task-runner/TaskBase.h"
 #include "task-runner/TaskRunner.h"
@@ -100,7 +100,7 @@ struct ConverterApp::Impl
 
 ConverterApp::ConverterApp( std::string working_dir )
 {
-    if ( !utils::dir_exist(working_dir) )
+    if ( !utils::dir_exist( working_dir ) )
     {
         std::cerr << "Cannot access " << working_dir << "\n";
         return;

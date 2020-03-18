@@ -1,10 +1,10 @@
 #include "ConverterAppSimple.h"
 
-#include "converter/ConverterLame.h"
 #include "common/Utils.h"
+#include "converter/ConverterLame.h"
 
-#include <thread>
 #include <iostream>
+#include <thread>
 
 namespace converter
 {
@@ -19,7 +19,7 @@ ConverterAppSimple::~ConverterAppSimple( )
 bool
 ConverterAppSimple::run( std::string working_dir )
 {
-    if ( !utils::dir_exist(working_dir) )
+    if ( !utils::dir_exist( working_dir ) )
     {
         std::cerr << "Cannot access " << working_dir << "\n";
         return false;
@@ -49,7 +49,7 @@ ConverterAppSimple::run( std::string working_dir )
 
     if ( m_files_to_convert.empty( ) )
     {
-		std::cout << "No files for convertion\n";
+        std::cout << "No files for convertion\n";
         return false;
     }
 

@@ -1,16 +1,16 @@
 #include "gtest/gtest.h"
 
+#include "common/Helpers.h"
 #include "converter/ConverterHelper.h"
 #include "converter/ConverterLame.h"
 #include "converter/ConverterTask.h"
-#include "common/Helpers.h"
 
 #include "task-runner/TaskRunner.h"
 
 #include <sstream>
 
 #ifdef WIN32
-const std::string g_working_dir( "..\\res\\" );   
+const std::string g_working_dir( "..\\res\\" );
 #else
 const std::string g_working_dir( "./res/" );
 #endif
