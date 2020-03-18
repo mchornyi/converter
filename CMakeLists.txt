@@ -59,8 +59,8 @@ target_link_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     ${PROJECT_NAME}_arch 
     lame
-    lame_frontend_arch)
-    #pthread)
+    lame_frontend_arch
+    "${CMAKE_THREAD_LIBS_INIT}")
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE "${PROJECT_BINARY_DIR}"
