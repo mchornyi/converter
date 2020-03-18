@@ -14,6 +14,8 @@ public:
 
     task_runner::ErrorInfo convert( std::string argumets ) override;
 
+    void convert( const std::string& file_in, const std::string& file_out );
+
 private:
     struct Impl;
     std::unique_ptr< Impl > m_pimpl;

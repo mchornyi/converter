@@ -30,6 +30,7 @@ list(REMOVE_ITEM CONVERTER_ARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHe
 set(CONVERTER_COMMON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterHelper.cpp" )
 set(CONVERTER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterLame.cpp" 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterApp.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/ConverterAppSimple.cpp"
     )
 
 add_library(${PROJECT_NAME}_arch "${CONVERTER_ARCH_SRC}")

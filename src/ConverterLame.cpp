@@ -1,13 +1,12 @@
 #include "ConverterLame.h"
 
-#include <vector>
 #include <sstream>
+#include <vector>
 
 #include "frontend/main.h"
 
 namespace converter
 {
-
 struct ConverterLame::Impl
 {
 };
@@ -40,7 +39,7 @@ ConverterLame::convert( std::string argumets )
 
     //
     lame_t gf;
-    gf = lame_init( ); // initialize libmp3lame
+    gf = lame_init( );  // initialize libmp3lame
     if ( NULL == gf )
     {
         result = {task_runner::Error::FatalLameInit, "Fatal error during initialization\n"};
@@ -58,6 +57,17 @@ ConverterLame::convert( std::string argumets )
     }
 
     return result;
+}
+
+void
+ConverterLame::convert( const std::string& file_path_in, const std::string& file_path_out )
+{
+    std::stringstream argumets;
+
+    argumets << "lame -q4 -b160";  // good quality
+    argumets << " " << file_path_in << " " << file_path_out;
+
+    convert( argumets.str( ) );
 }
 
 }  // namespace converter

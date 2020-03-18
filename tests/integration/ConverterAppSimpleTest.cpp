@@ -1,19 +1,18 @@
 #include "gtest/gtest.h"
 
-#include "ConverterApp.h"
+#include "ConverterAppSimple.h"
 #include "common/Helpers.h"
+
 namespace
 {
 using namespace converter;
 const uint32_t expected_file_size_testcase_mp3( 12538 );
 const uint32_t expected_file_size_big_test_case_mp3( 1181257 );
 
-TEST( ConverterAppTest, RunApp )
+TEST( ConverterAppSimpleTest, RunApp )
 {
     const std::string working_dir( "./res/" );
-    ConverterApp app( working_dir );
-
-    EXPECT_TRUE( app.run( ) );
+    EXPECT_TRUE( ConverterAppSimple( ).run( working_dir ) );
 
     // Check the files and cleanup
 
@@ -29,11 +28,9 @@ TEST( ConverterAppTest, RunApp )
     EXPECT_EQ( 0, remove( out_file_big_test_case_mp3.c_str( ) ) );
 }
 
-TEST( ConverterAppTest, RunAppNotValidWorkingDir )
+TEST( ConverterAppSimpleTest, RunAppNotValidWorkingDir )
 {
     const std::string working_dir( "./res1/" );
-    ConverterApp app( working_dir );
-
-    ASSERT_FALSE( app.run( ) );
+    ASSERT_FALSE( ConverterAppSimple( ).run( working_dir ) );
 }
 }  // namespace

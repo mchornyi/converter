@@ -6,6 +6,7 @@
 #endif
 
 #include "ConverterApp.h"
+#include "ConverterAppSimple.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -36,9 +37,10 @@ main( int argc, const char* argv[] )
         return 1;
     }
 
-    converter::ConverterApp app( folder_path );
-
-    app.run( );
+    // converter::ConverterApp app( folder_path );
+    // app.run( );
+    
+    converter::ConverterAppSimple().run( folder_path );
 
     return 0;
 }
