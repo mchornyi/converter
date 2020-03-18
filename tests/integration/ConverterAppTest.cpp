@@ -4,15 +4,7 @@
 #include "common/Helpers.h"
 
 #ifdef WIN32
-<<<<<<< HEAD
-#ifdef DEBUG
-const std::string g_working_dir( "../Debug/res/" );
-#else
-const std::string g_working_dir( "../Release/res/" );
-#endif
-=======
 const std::string g_working_dir( "..\\res\\" );
->>>>>>> WIN32 Adaptation
 #else
 const std::string g_working_dir( "./res/" );
 #endif

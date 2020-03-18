@@ -10,16 +10,7 @@ const uint32_t expected_file_size_testcase_mp3( 12538 );
 const uint32_t expected_file_size_big_test_case_mp3( 1181257 );
 
 #ifdef WIN32
-<<<<<<< HEAD
-#ifdef DEBUG
-const std::string g_working_dir( "../Debug/res/" );
-#else
-const std::string g_working_dir( "../Release/res/" );
-#endif
-=======
-//const std::string g_working_dir("..\\res\\");
-const std::string g_working_dir("res\\");
->>>>>>> WIN32 Adaptation
+const std::string g_working_dir("..\\res\\");
 #else
 const std::string g_working_dir( "./res/" );
 #endif
