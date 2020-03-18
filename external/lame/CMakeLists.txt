@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 project (lame)
 
-if(WIN32)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dll)
-endif()
+#if(WIN32)
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Dll)
+#endif()
 
 add_definitions(-DHAVE_STDINT_H)
 add_definitions(-DHAVE_MPGLIB)

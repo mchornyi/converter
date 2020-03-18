@@ -3,6 +3,7 @@
 #include "common/Utils.h"
 
 #include <thread>
+#include <iostream>
 
 namespace converter
 {

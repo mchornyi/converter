@@ -34,6 +34,7 @@ stop_thread( TaskThread& thread )
     thread.join( );
 }
 
+#ifndef WIN32
 TEST( TaskThreadDeathTest, NoJoin )
 {
     ASSERT_DEATH(
@@ -44,6 +45,7 @@ TEST( TaskThreadDeathTest, NoJoin )
         },
         TaskThread::get_death_error_msg( ) );
 }
+#endif
 
 TEST( TaskThreadTest, Stop )
 {

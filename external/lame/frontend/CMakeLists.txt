@@ -7,7 +7,8 @@ list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/gpkplotting.c")
 list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/gtkanal.c")
 list(REMOVE_ITEM LAME_FRONTEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/mp3x.c")
 
-add_library(${PROJECT_NAME} "${LAME_FRONTEND_SRC}")
+add_library(${PROJECT_NAME} STATIC "${LAME_FRONTEND_SRC}")
+
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE -DHAVE_STDINT_H
     PRIVATE -DHAVE_LIMITS_H
@@ -25,3 +26,7 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE "../libmp3lame"
     PRIVATE "../"
     )
+
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} wsock32 ws2_32)
+endif()
