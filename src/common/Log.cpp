@@ -4,9 +4,9 @@
 
 #include <stdarg.h>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <thread>
-#include <iostream>
 
 namespace logger
 {
@@ -16,7 +16,11 @@ log_message( const char* file, const char* function, int line, const char* forma
     char buffer[ 256 ];
     va_list args;
     va_start( args, format );
+#ifdef WIN32
     vsprintf_s( buffer, format, args );
+#else
+    vsprintf( buffer, format, args );
+#endif
     va_end( args );
 
     std::cout << format_message( file, function, line, buffer );
@@ -31,7 +35,11 @@ format_message( const char* file, const char* function, int line, const char* me
     auto thread_id = std::this_thread::get_id( );
 
     std::string str_file( file );
-    const std::string project_src("converter/");
+#ifdef WIN32
+    const std::string project_src( "converter\\" );
+#else
+    const std::string project_src( "converter/" );
+#endif
     str_file = str_file.substr( str_file.find( project_src ) );
 
     std::stringstream ss;

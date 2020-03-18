@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-#if defined(_WIN32)
+#ifdef WIN32
 #include <Windows.h>
 #include <io.h>
 #else
@@ -18,53 +18,52 @@ list_files( const std::string& working_dir )
 {
     std::vector< std::string > res;
 
-    #ifdef WIN32
+#ifdef WIN32
 
     HANDLE hFind = INVALID_HANDLE_VALUE;
     WIN32_FIND_DATA fdata;
- 
+
     std::string dir = working_dir;
-    if(dir[dir.size()-1] == '\\' || dir[dir.size()-1] == '/') 
+    if ( dir[ dir.size( ) - 1 ] == '\\' || dir[ dir.size( ) - 1 ] == '/' )
     {
-        dir = dir.substr(0,dir.size()-1);
+        dir = dir.substr( 0, dir.size( ) - 1 );
     }
- 
-    hFind = FindFirstFile(std::string(dir).append("\\*").c_str(), &fdata); 
-    if (hFind != INVALID_HANDLE_VALUE)
+
+    hFind = FindFirstFile( std::string( dir ).append( "\\*" ).c_str( ), &fdata );
+    if ( hFind != INVALID_HANDLE_VALUE )
     {
         do
         {
-            if (strcmp(fdata.cFileName, ".") != 0 &&
-                strcmp(fdata.cFileName, "..") != 0)
+            if ( strcmp( fdata.cFileName, "." ) != 0 && strcmp( fdata.cFileName, ".." ) != 0 )
             {
-                if (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                if ( fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
                 {
                     continue;
                 }
                 else
                 {
-					const std::string file_path = dir + "\\" + fdata.cFileName;
-                    res.push_back(file_path);
-					std::cout << "File to convert: " << file_path << "\n";
-
+                    const std::string file_path = dir + "\\" + fdata.cFileName;
+                    res.push_back( file_path );
+                    std::cout << "File to convert: " << file_path << "\n";
                 }
             }
-        }
-        while (FindNextFile(hFind, &fdata) != 0);
-    } else {
-        std::cerr << "Can't access directory" << working_dir.c_str() << "\n";
+        } while ( FindNextFile( hFind, &fdata ) != 0 );
+    }
+    else
+    {
+        std::cerr << "Can't access directory" << working_dir.c_str( ) << "\n";
         return {};
     }
- 
-    if (GetLastError() != ERROR_NO_MORE_FILES)
+
+    if ( GetLastError( ) != ERROR_NO_MORE_FILES )
     {
-        FindClose(hFind);
-        std::cerr << "An error with reading directory: " << GetLastError() << std::endl;
+        FindClose( hFind );
+        std::cerr << "An error with reading directory: " << GetLastError( ) << std::endl;
     }
- 
-    FindClose(hFind);
+
+    FindClose( hFind );
     hFind = INVALID_HANDLE_VALUE;
-    #else
+#else
     DIR* directory = opendir( working_dir.c_str( ) );
     if ( directory == nullptr )
     {
@@ -81,7 +80,7 @@ list_files( const std::string& working_dir )
     }
 
     closedir( directory );
-    #endif
+#endif
 
     return res;
 }
@@ -106,13 +105,13 @@ filter_list_files( const std::vector< std::string >& files, const std::string& f
 bool
 dir_exist( const std::string& dir )
 {
-    #ifdef WIN32
+#ifdef WIN32
 
-    return (_access_s( dir.c_str(), 0 ) == 0);
-    #else
+    return ( _access_s( dir.c_str( ), 0 ) == 0 );
+#else
     struct stat info;
-    return (stat( dir.c_str( ), &info ) == 0);
-    #endif
+    return ( stat( dir.c_str( ), &info ) == 0 );
+#endif
 }
 
 }  // namespace utils

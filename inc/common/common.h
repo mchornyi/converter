@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(_WIN32)
+#ifdef WIN32
 
 #include <stdint.h>
 

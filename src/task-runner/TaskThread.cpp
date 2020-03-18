@@ -5,7 +5,6 @@
 
 #include <atomic>
 #include <thread>
-#include <iostream>
 
 namespace task_runner
 {
@@ -41,7 +40,7 @@ TaskThread::~TaskThread( )
 {
     if ( is_running( ) )
     {
-        std::cout << get_death_error_msg( ) << std::endl;
+        fprintf( stderr, "%s", get_death_error_msg( ) );
     }
 }
 
