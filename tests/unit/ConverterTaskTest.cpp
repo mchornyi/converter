@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
-#include "ConverterTask.h"
-#include "ConverterHelper.h"
+#include "converter/ConverterTask.h"
+#include "converter/ConverterHelper.h"
 
 #include "common/Helpers.h"
 #include "task-runner/TaskRunner.h"

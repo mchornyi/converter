@@ -1,5 +1,5 @@
 #include "ConverterAppSimple.h"
-#include "ConverterLame.h"
+#include "converter/ConverterLame.h"
 #include "common/Utils.h"
 
 #include <thread>

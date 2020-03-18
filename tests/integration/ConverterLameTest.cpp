@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
-#include "ConverterHelper.h"
-#include "ConverterLame.h"
-#include "ConverterTask.h"
+#include "converter/ConverterHelper.h"
+#include "converter/ConverterLame.h"
+#include "converter/ConverterTask.h"
 #include "common/Helpers.h"
 
 #include "task-runner/TaskRunner.h"

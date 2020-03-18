@@ -1,8 +1,8 @@
 #include "ConverterApp.h"
 
-#include "ConverterHelper.h"
-#include "ConverterLame.h"
-#include "ConverterTask.h"
+#include "converter/ConverterHelper.h"
+#include "converter/ConverterLame.h"
+#include "converter/ConverterTask.h"
 #include "common/Log.h"
 #include "common/Utils.h"
 

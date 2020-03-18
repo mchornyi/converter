@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gmock/gmock.h"
-#include "IConverter.h"
+#include "converter/IConverter.h"
 
 namespace task_mocks
 {
