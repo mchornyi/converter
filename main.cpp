@@ -20,23 +20,17 @@ main( int argc, const char* argv[] )
                   << "Version " << Converter_VERSION_MAJOR << "." << Converter_VERSION_MINOR
                   << std::endl;
 
-        std::cout << "Usage: " << argv[ 0 ] << " folder_path" << std::endl;
+        std::cout << "Usage: " << argv[ 0 ] << " directory_path" << std::endl;
 
         return 1;
     }
 
-    std::string folder_path( argv[ 1 ] );
+    std::string directory_path( argv[ 1 ] );
 
-    if ( !utils::dir_exist( folder_path ) )
-    {
-        std::cerr << "Cannot access " << folder_path << "\n";
-        return 1;
-    }
-
-    // converter::ConverterApp app( folder_path );
+    // converter::ConverterApp app( directory_path );
     // app.run( );
 
-    converter::ConverterAppSimple( ).run( folder_path );
+    converter::ConverterAppSimple( ).run( directory_path );
 
     return 0;
 }
