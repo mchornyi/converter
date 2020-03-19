@@ -5,8 +5,12 @@
 #define Converter_VERSION_MINOR 0
 #endif
 
-//#include "ConverterApp.h"
+#ifdef ENABLE_EXTENDED_ARCHITECTURE
+#include "ConverterApp.h"
+#else
 #include "ConverterAppSimple.h"
+#endif
+
 #include "common/Utils.h"
 
 #include <iostream>
@@ -27,10 +31,12 @@ main( int argc, const char* argv[] )
 
     std::string directory_path( argv[ 1 ] );
 
-    // converter::ConverterApp app( directory_path );
-    // app.run( );
-
+#ifdef ENABLE_EXTENDED_ARCHITECTURE
+    converter::ConverterApp app( directory_path );
+    app.run( );
+#else
     converter::ConverterAppSimple( ).run( directory_path );
+#endif
 
     return 0;
 }
