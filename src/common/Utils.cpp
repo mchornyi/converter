@@ -13,6 +13,17 @@
 
 namespace utils
 {
+#ifdef WIN32
+std::string 
+exe_path() 
+{
+    char buffer[MAX_PATH];
+    GetModuleFileName( NULL, buffer, MAX_PATH );
+    std::string::size_type pos = std::string( buffer ).find_last_of( "\\/" );
+    return std::string( buffer ).substr( 0, pos);
+}
+#endif
+
 std::vector< std::string >
 list_files( const std::string& working_dir )
 {
@@ -51,7 +62,7 @@ list_files( const std::string& working_dir )
     }
     else
     {
-        std::cerr << "Can't access directory" << working_dir.c_str( ) << "\n";
+        std::cerr << "Can't access directory " << working_dir.c_str( ) << "\n";
         return {};
     }
 
@@ -106,8 +117,10 @@ bool
 dir_exist( const std::string& dir )
 {
 #ifdef WIN32
-
-    return ( _access_s( dir.c_str( ), 0 ) == 0 );
+    DWORD dwAttrib = GetFileAttributes(dir.c_str());
+    bool res = (dwAttrib != INVALID_FILE_ATTRIBUTES) ;
+    res &= ((dwAttrib & FILE_ATTRIBUTE_DIRECTORY) != 0);
+    return res;
 #else
     struct stat info;
     return ( stat( dir.c_str( ), &info ) == 0 );
