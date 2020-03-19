@@ -5,6 +5,8 @@
 #define Converter_VERSION_MINOR 0
 #endif
 
+//#define ENABLE_EXTENDED_ARCHITECTURE
+
 #ifdef ENABLE_EXTENDED_ARCHITECTURE
 #include "ConverterApp.h"
 #else
