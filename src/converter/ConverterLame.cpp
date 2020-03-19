@@ -1,11 +1,11 @@
 #include "ConverterLame.h"
 
+#include <iostream>
 #include <sstream>
 #include <vector>
-#include <iostream>
 
-#include "frontend/main.h"
 #include "frontend/console.h"
+#include "frontend/main.h"
 
 namespace converter
 {
@@ -49,7 +49,7 @@ ConverterLame::convert( std::string argumets )
     else
     {
         frontend_open_console( );
-		std::cout << "Run Lame with the following arguments: " << argumets << "\n";
+        std::cout << "Run Lame with the following arguments: " << argumets << "\n";
         lame_main( gf, args.size( ) - 1, args.data( ) );
         lame_close( gf );
         frontend_close_console( );

@@ -78,7 +78,7 @@ TaskBase::remove_listener( ITaskListener* listener )
 bool
 TaskBase::run( )
 {
-    std::lock_guard<std::mutex> lock(m_pimpl->run_mtx);
+    std::lock_guard< std::mutex > lock( m_pimpl->run_mtx );
 
     const State currnet_state = get_state( );
     if ( currnet_state != State::None )

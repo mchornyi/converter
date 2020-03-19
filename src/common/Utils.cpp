@@ -14,13 +14,13 @@
 namespace utils
 {
 #ifdef WIN32
-std::string 
-exe_path() 
+std::string
+exe_path( )
 {
-    char buffer[MAX_PATH];
+    char buffer[ MAX_PATH ];
     GetModuleFileName( NULL, buffer, MAX_PATH );
     std::string::size_type pos = std::string( buffer ).find_last_of( "\\/" );
-    return std::string( buffer ).substr( 0, pos);
+    return std::string( buffer ).substr( 0, pos );
 }
 #endif
 
@@ -117,9 +117,9 @@ bool
 dir_exist( const std::string& dir )
 {
 #ifdef WIN32
-    DWORD dwAttrib = GetFileAttributes(dir.c_str());
-    bool res = (dwAttrib != INVALID_FILE_ATTRIBUTES) ;
-    res &= ((dwAttrib & FILE_ATTRIBUTE_DIRECTORY) != 0);
+    DWORD dwAttrib = GetFileAttributes( dir.c_str( ) );
+    bool res = ( dwAttrib != INVALID_FILE_ATTRIBUTES );
+    res &= ( ( dwAttrib & FILE_ATTRIBUTE_DIRECTORY ) != 0 );
     return res;
 #else
     struct stat info;

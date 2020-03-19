@@ -11,7 +11,7 @@
 #include <sstream>
 
 #ifdef WIN32
-const std::string g_working_dir = utils::exe_path() + "\\..\\res\\";
+const std::string g_working_dir = utils::exe_path( ) + "\\..\\res\\";
 #else
 const std::string g_working_dir( "./res/" );
 #endif
@@ -22,9 +22,8 @@ using namespace converter;
 
 const uint32_t expected_file_size_testcase_mp3( 12538 );
 
-    const std::string file_path_in = g_working_dir + "testcase.wav";
-    const std::string file_path_out = g_working_dir + "testcase.mp3";
-
+const std::string file_path_in = g_working_dir + "testcase.wav";
+const std::string file_path_out = g_working_dir + "testcase.mp3";
 
 TEST( ConverterLameTest, DefaultConvert )
 {

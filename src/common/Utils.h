@@ -6,7 +6,7 @@
 namespace utils
 {
 #ifdef WIN32
-std::string exe_path();
+std::string exe_path( );
 #endif
 
 std::vector< std::string > list_files( const std::string& working_dir );
