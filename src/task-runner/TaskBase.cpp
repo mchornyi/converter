@@ -83,7 +83,7 @@ TaskBase::run( )
     const State currnet_state = get_state( );
     if ( currnet_state != State::None )
     {
-        LOG( "WARN: The task id=%l state is ", get_id( ), currnet_state );
+        LOG( "WARN: The task id=%d state is %d", get_id( ), currnet_state );
         return false;
     }
 
