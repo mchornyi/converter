@@ -6,13 +6,23 @@
 
 namespace task_runner
 {
-auto task_compare = []( const TaskBase* lhs, const TaskBase* rhs ) {
+auto task_compare = []( const TaskBase* lhs, const TaskBase* rhs ) -> bool {
     if ( lhs == nullptr || rhs == nullptr )
     {
         return false;
     }
 
-    return ( lhs->get_priority( ) < rhs->get_priority( ) ) || ( ( lhs < rhs ) );
+    if( lhs->get_priority( ) < rhs->get_priority( ) )
+    {
+        return true;
+    }
+
+    if( lhs->get_priority( ) == rhs->get_priority( ) )
+    {
+        return  lhs < rhs;
+    }
+
+    return false;
 };
 
 struct TaskList::Impl
@@ -55,12 +65,16 @@ struct TaskList::Impl
         }
 
         auto it = tasks_list.end( );
+        
         --it;
+        
+        TaskBase* task = *it;
+
+        task->set_state( State::None );
+
         tasks_list.erase( it );
 
-        ( *it )->set_state( State::None );
-
-        return *it;
+        return task;
     }
 
     int
