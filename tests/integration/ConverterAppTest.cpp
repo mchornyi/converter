@@ -2,9 +2,10 @@
 
 #include "ConverterApp.h"
 #include "common/Helpers.h"
+#include "common/Utils.h"
 
 #ifdef WIN32
-const std::string g_working_dir( "..\\res\\" );
+const std::string g_working_dir = utils::exe_path() + "\\..\\res\\";
 #else
 const std::string g_working_dir( "./res/" );
 #endif
